@@ -1,8 +1,18 @@
 # Rang Rani
 
-A Lahore jewelry shop — browse the wall, add pieces, and send an order without a separate sign-in page.
+A Lahore jewelry shop - browse the wall, add pieces, and send an order without a separate sign-in page.
 
 Beaded, kundan, charm, and bridal collections · PKR · Vite + React + Firebase
+
+<p>
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white" />
+  <img alt="React" src="https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black" />
+  <img alt="Vite" src="https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white" />
+  <img alt="CSS" src="https://img.shields.io/badge/CSS-1572B6?logo=css&logoColor=white" />
+  <img alt="Express" src="https://img.shields.io/badge/Express-000000?logo=express&logoColor=white" />
+  <img alt="MongoDB" src="https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white" />
+  <img alt="Firebase" src="https://img.shields.io/badge/Firebase-FFCA28?logo=firebase&logoColor=black" />
+</p>
 
 ---
 
@@ -63,6 +73,19 @@ Admin: [http://localhost:5173/admin](http://localhost:5173/admin)
 npm run dev
 npm run build
 ```
+
+## Built with
+
+This shop is **TypeScript + React**, not separate `.html` pages like the bus-tracking project. GitHub's language bar therefore shows TypeScript and CSS first, with a small HTML file (`index.html`).
+
+| Badge | Role |
+|-------|------|
+| TypeScript | App, API, and shared types |
+| React + Vite | Shop and admin UI |
+| CSS | Layout and theme (no Tailwind) |
+| Express | Catalog and stock API |
+| MongoDB | Product inventory |
+| Firebase | Customers, orders, confirmation mail |
 
 ## License
 
