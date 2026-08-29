@@ -1,4 +1,4 @@
-# Rang Rani
+# Rang Rani Ecommerce Website
 
 A Lahore jewelry shop - browse the wall, add pieces, and send an order without a separate sign-in page.
 
