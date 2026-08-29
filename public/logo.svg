@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" role="img" aria-label="Rang Rani">
+  <circle cx="40" cy="40" r="37.2" fill="#3d0f1a" stroke="#c9a24a" stroke-width="1.4"/>
+  <circle cx="40" cy="40" r="32.5" fill="none" stroke="#c9a24a" stroke-width="0.5" opacity="0.7"/>
+  <path d="M40 11.5 42.4 16.8 40 16 37.6 16.8Z" fill="#c9a24a"/>
+  <text
+    x="40"
+    y="53"
+    text-anchor="middle"
+    fill="#c9a24a"
+    font-family="Playfair Display, Georgia, serif"
+    font-size="34"
+    font-weight="700"
+  >R</text>
+</svg>

@@ -1,0 +1,194 @@
+[
+  {
+    "title": "Gulab Moti Beads",
+    "price": 300,
+    "description": "Maroon and cream beads with a red rose charm.",
+    "category": "beaded",
+    "image": "/images/rose-beads.jpg",
+    "rating": {
+      "rate": 4.8,
+      "count": 64
+    },
+    "stock": 12
+  },
+  {
+    "title": "Moti Mini Stack",
+    "price": 280,
+    "description": "Small pearl beads for a soft everyday stack.",
+    "category": "beaded",
+    "image": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=800&q=80",
+    "rating": {
+      "rate": 4.4,
+      "count": 37
+    },
+    "stock": 8
+  },
+  {
+    "title": "Paisley Stone Bangle",
+    "price": 350,
+    "description": "Gold bangle with a paisley stone pattern.",
+    "category": "beaded",
+    "image": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=800&q=80",
+    "rating": {
+      "rate": 4.3,
+      "count": 27
+    },
+    "stock": 4
+  },
+  {
+    "title": "Coral Bead Line",
+    "price": 250,
+    "description": "Warm coral beads on a simple stretch line.",
+    "category": "beaded",
+    "image": "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=800&q=80",
+    "rating": {
+      "rate": 4.4,
+      "count": 44
+    },
+    "stock": 2
+  },
+  {
+    "title": "Mehndi Gold Set",
+    "price": 650,
+    "description": "Gold jewelry set for mehndi night.",
+    "category": "kundan",
+    "image": "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=800&q=80",
+    "rating": {
+      "rate": 4.9,
+      "count": 88
+    },
+    "stock": 5
+  },
+  {
+    "title": "Neelam Stone Set",
+    "price": 580,
+    "description": "Blue stone jewelry — not pink. Cool neelam shine.",
+    "category": "kundan",
+    "image": "https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=800&q=80",
+    "rating": {
+      "rate": 4.9,
+      "count": 71
+    },
+    "stock": 3
+  },
+  {
+    "title": "Sheesh Gold Drops",
+    "price": 720,
+    "description": "Bright gold drop jewelry for the baraat walk.",
+    "category": "kundan",
+    "image": "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=800&q=80",
+    "rating": {
+      "rate": 4.8,
+      "count": 19
+    },
+    "stock": 1
+  },
+  {
+    "title": "Sona Ring Band",
+    "price": 550,
+    "description": "A slim gold ring band with a clear stone.",
+    "category": "kundan",
+    "image": "https://images.unsplash.com/photo-1603561596112-0a132b757442?auto=format&fit=crop&w=800&q=80",
+    "rating": {
+      "rate": 4.8,
+      "count": 17
+    },
+    "stock": 6
+  },
+  {
+    "title": "Aftab Smiley Beads",
+    "price": 300,
+    "description": "Yellow and red beads with a gold smiley charm.",
+    "category": "charm",
+    "image": "/images/sun-beads.png",
+    "rating": {
+      "rate": 4.7,
+      "count": 41
+    },
+    "stock": 10
+  },
+  {
+    "title": "Chain Charm Bracelet",
+    "price": 400,
+    "description": "A slim chain bracelet with one hanging charm.",
+    "category": "charm",
+    "image": "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&w=800&q=80",
+    "rating": {
+      "rate": 4.6,
+      "count": 48
+    },
+    "stock": 0
+  },
+  {
+    "title": "Leather Charm Wrap",
+    "price": 450,
+    "description": "A wrap bracelet with a small metal charm.",
+    "category": "charm",
+    "image": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&q=80",
+    "rating": {
+      "rate": 4.7,
+      "count": 31
+    },
+    "stock": 7
+  },
+  {
+    "title": "Lal Bazaar Beads",
+    "price": 350,
+    "description": "Red beads and pearls from a busy jewelry stall.",
+    "category": "charm",
+    "image": "/images/market-stack.jpg",
+    "rating": {
+      "rate": 4.5,
+      "count": 28
+    },
+    "stock": 9
+  },
+  {
+    "title": "Velvet Gold Bangles",
+    "price": 850,
+    "description": "Ornate gold bangles on a bridal velvet tray.",
+    "category": "bridal",
+    "image": "/images/hero-kangans.jpg",
+    "rating": {
+      "rate": 4.6,
+      "count": 29
+    },
+    "stock": 2
+  },
+  {
+    "title": "Pearl Bridal Cuff",
+    "price": 500,
+    "description": "A white pearl cuff for shaadi mornings.",
+    "category": "bridal",
+    "image": "https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?auto=format&fit=crop&w=800&q=80",
+    "rating": {
+      "rate": 4.8,
+      "count": 33
+    },
+    "stock": 4
+  },
+  {
+    "title": "Shaadi Night Set",
+    "price": 950,
+    "description": "A heavier bridal jewelry set for mehndi and walima.",
+    "category": "bridal",
+    "image": "https://images.unsplash.com/photo-1515562149607-3cf6d76c4c0c?auto=format&fit=crop&w=800&q=80",
+    "rating": {
+      "rate": 4.9,
+      "count": 14
+    },
+    "stock": 1
+  },
+  {
+    "title": "Phool Filigree Set",
+    "price": 750,
+    "description": "Gold filigree bangle and matching ring with flower stones.",
+    "category": "bridal",
+    "image": "/images/filigree-set.jpg",
+    "rating": {
+      "rate": 4.7,
+      "count": 21
+    },
+    "stock": 8
+  }
+]

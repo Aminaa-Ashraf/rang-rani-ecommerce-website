@@ -1,0 +1,330 @@
+{
+  "version": "2.17",
+  "children": [
+    {
+      "type": "frame",
+      "id": "a4Y6l",
+      "x": 1800,
+      "y": 0,
+      "name": "Logo Lockup",
+      "reusable": true,
+      "gap": 12,
+      "alignItems": "center",
+      "children": [
+        {
+          "id": "wFXBc",
+          "type": "ref",
+          "ref": "hXwVo",
+          "name": "Mark in lockup",
+          "width": 64,
+          "height": 64
+        },
+        {
+          "type": "frame",
+          "id": "G7FHrl",
+          "name": "Wordmark",
+          "layout": "vertical",
+          "gap": 2,
+          "children": [
+            {
+              "type": "text",
+              "id": "IBuFp",
+              "name": "Rang word",
+              "fill": "#1C1014",
+              "content": "Rang Rani",
+              "fontFamily": "Playfair Display",
+              "fontSize": 26,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "ZkYWC",
+              "name": "Rani word",
+              "fill": "#D4AF37",
+              "content": "rangrani.pk",
+              "fontFamily": "Inter",
+              "fontSize": 11,
+              "fontWeight": "500"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "PUbCN",
+      "x": 2079,
+      "y": 0,
+      "name": "Logo Icon",
+      "reusable": true,
+      "clip": true,
+      "width": 200,
+      "height": 200,
+      "fill": {
+        "type": "image",
+        "enabled": true,
+        "url": "./images/generated-1787996924521.png",
+        "mode": "fill"
+      },
+      "cornerRadius": 100
+    },
+    {
+      "type": "frame",
+      "id": "y70mk",
+      "x": 2359,
+      "y": 0,
+      "name": "Logo Icon Clean",
+      "reusable": true,
+      "clip": true,
+      "width": 200,
+      "height": 200,
+      "fill": {
+        "type": "image",
+        "enabled": true,
+        "url": "./images/generated-1787996977827.png",
+        "mode": "fill"
+      },
+      "cornerRadius": 100
+    },
+    {
+      "type": "frame",
+      "id": "QC0ol",
+      "x": 2639,
+      "y": 0,
+      "name": "Royal Crest Logo",
+      "reusable": true,
+      "clip": true,
+      "width": 220,
+      "height": 220,
+      "fill": {
+        "type": "image",
+        "enabled": true,
+        "url": "./images/generated-1787997179953.png",
+        "mode": "fill"
+      },
+      "cornerRadius": 20
+    },
+    {
+      "type": "frame",
+      "id": "q8BjRW",
+      "x": -2318,
+      "y": 1149,
+      "name": "About",
+      "width": "fill_container(1360)",
+      "layout": "vertical",
+      "gap": 10,
+      "children": [
+        {
+          "type": "text",
+          "id": "ohAKs",
+          "name": "About eye",
+          "fill": "$accent",
+          "content": "ABOUT",
+          "fontFamily": "Nunito",
+          "fontSize": 12,
+          "fontWeight": "normal",
+          "letterSpacing": 2
+        },
+        {
+          "type": "text",
+          "id": "ivQVQ",
+          "name": "About title",
+          "fill": "$text",
+          "content": "Made for the desi girly pop",
+          "fontFamily": "Playfair Display",
+          "fontSize": 32,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "HTR81",
+          "name": "About copy",
+          "fill": "$muted",
+          "textGrowth": "fixed-width",
+          "width": 720,
+          "content": "A tiny kangan studio for mehndi nights, chai dates, and everyday sparkle.",
+          "fontFamily": "Nunito",
+          "fontSize": 16,
+          "fontWeight": "normal"
+        }
+      ]
+    },
+    {
+      "type": "path",
+      "id": "Mqmdi",
+      "x": -341.5,
+      "y": 2697.5,
+      "geometry": "M0 0",
+      "width": 0,
+      "height": 0,
+      "stroke": "#000000",
+      "strokeWidth": 1
+    },
+    {
+      "type": "frame",
+      "id": "hXwVo",
+      "x": 2939,
+      "y": 0,
+      "name": "Rang Rani Mark",
+      "reusable": true,
+      "clip": true,
+      "width": 200,
+      "height": 200,
+      "fill": {
+        "type": "image",
+        "enabled": true,
+        "url": "images/generated-1788002567697.png",
+        "mode": "fill"
+      }
+    },
+    {
+      "type": "frame",
+      "id": "wQoId",
+      "x": 3219,
+      "y": 0,
+      "name": "Rang Rani Logo",
+      "clip": true,
+      "width": 1040,
+      "fill": "#F9F7F2",
+      "layout": "vertical",
+      "gap": 40,
+      "padding": 56,
+      "children": [
+        {
+          "type": "text",
+          "id": "WwdOj",
+          "name": "Sheet eye",
+          "fill": "#D4AF37",
+          "content": "RANGRANI.PK",
+          "fontFamily": "Inter",
+          "fontSize": 12,
+          "fontWeight": "600"
+        },
+        {
+          "type": "text",
+          "id": "a30jIl",
+          "name": "Sheet title",
+          "fill": "#1C1014",
+          "content": "Rang Rani logo",
+          "fontFamily": "Playfair Display",
+          "fontSize": 40,
+          "fontWeight": "700"
+        },
+        {
+          "type": "frame",
+          "id": "UqJ0F",
+          "name": "Logo row",
+          "width": "fill_container",
+          "gap": 48,
+          "alignItems": "center",
+          "children": [
+            {
+              "id": "HrqPa",
+              "type": "ref",
+              "ref": "hXwVo",
+              "name": "Large mark",
+              "width": 160,
+              "height": 160
+            },
+            {
+              "id": "FOQUt",
+              "type": "ref",
+              "ref": "a4Y6l",
+              "name": "Lockup on cream"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Q8Kw1l",
+          "name": "Dark lockup card",
+          "width": "fill_container",
+          "fill": "#1C1014",
+          "cornerRadius": 20,
+          "gap": 20,
+          "padding": 36,
+          "alignItems": "center",
+          "children": [
+            {
+              "id": "mvdTH",
+              "type": "ref",
+              "ref": "hXwVo",
+              "name": "Dark mark",
+              "width": 88,
+              "height": 88
+            },
+            {
+              "type": "frame",
+              "id": "BJeRz",
+              "name": "Dark words",
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "VozmS",
+                  "name": "Dark name",
+                  "fill": "#F9F7F2",
+                  "content": "Rang Rani",
+                  "fontFamily": "Playfair Display",
+                  "fontSize": 32,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "GNMGx",
+                  "name": "Dark domain",
+                  "fill": "#D4AF37",
+                  "content": "rangrani.pk",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "bg": {
+      "type": "color",
+      "value": "#FDF6EC"
+    },
+    "surface": {
+      "type": "color",
+      "value": "#F7EFE3"
+    },
+    "card": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "text": {
+      "type": "color",
+      "value": "#2B2B2B"
+    },
+    "muted": {
+      "type": "color",
+      "value": "#6B5348"
+    },
+    "accent": {
+      "type": "color",
+      "value": "#7B1E3A"
+    },
+    "lilac": {
+      "type": "color",
+      "value": "#7B1E3A"
+    },
+    "deep": {
+      "type": "color",
+      "value": "#5A1429"
+    },
+    "blush": {
+      "type": "color",
+      "value": "#D4AF37"
+    }
+  },
+  "fileToken": "82b90afd-5dfd-4e45-b8e3-72f4adc8df03"
+}

@@ -1,0 +1,47 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+    function isValidCustomer() {
+      return request.resource.data.keys().hasAll(['name', 'email', 'phone', 'city', 'address', 'updatedAt'])
+        && request.resource.data.name is string
+        && request.resource.data.name.size() >= 2
+        && request.resource.data.email is string
+        && request.resource.data.phone is string
+        && request.resource.data.phone.size() >= 10
+        && request.resource.data.city is string
+        && request.resource.data.address is string;
+    }
+    function isValidOrder() {
+      return request.resource.data.keys().hasAll(['uid', 'name', 'email', 'phone', 'city', 'address', 'items', 'total', 'createdAt'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.items is list
+        && request.resource.data.items.size() > 0
+        && request.resource.data.total is number
+        && request.resource.data.total > 0;
+    }
+    match /customers/{userId} {
+      allow read: if isOwner(userId);
+      allow create, update: if isOwner(userId) && isValidCustomer();
+      allow delete: if false;
+    }
+    match /orders/{orderId} {
+      allow read: if isSignedIn() && resource.data.uid == request.auth.uid;
+      allow create: if isSignedIn() && isValidOrder();
+      allow update, delete: if false;
+    }
+    match /mail/{mailId} {
+      allow create: if isSignedIn()
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.to is string
+        && request.resource.data.to == request.resource.data.to.lower()
+        && request.resource.data.keys().hasAll(['uid', 'to', 'replyTo', 'message']);
+      allow read, update, delete: if false;
+    }
+  }
+}
