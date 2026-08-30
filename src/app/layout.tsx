@@ -4,6 +4,29 @@ import '../styles/app.css'
 
 export const metadata: Metadata = {
   title: 'Rang Rani — Jewelry',
+  description: 'Bangles and bracelets from Lahore. Beaded, kundan, charm, and bridal styles.',
+  metadataBase: new URL('https://rang-rani.vercel.app'),
+  openGraph: {
+    title: 'Rang Rani — Bangles & bracelets from Lahore',
+    description: 'Moti for Tuesday, kundan for shine, a bridal stack for the shaadi week.',
+    url: 'https://rang-rani.vercel.app',
+    siteName: 'Rang Rani',
+    type: 'website',
+    images: [
+      {
+        url: '/images/og-share.jpg',
+        width: 1200,
+        height: 627,
+        alt: 'Gold bangles from the Rang Rani studio',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Rang Rani — Bangles & bracelets from Lahore',
+    description: 'Bangles and bracelets from Lahore. Beaded, kundan, charm, and bridal styles.',
+    images: ['/images/og-share.jpg'],
+  },
   icons: {
     icon: '/favicon.svg',
   },
