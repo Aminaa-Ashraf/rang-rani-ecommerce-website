@@ -1,12 +1,9 @@
-import { readFile } from 'node:fs/promises'
-import path from 'node:path'
 import type { Product } from '../shared/types.ts'
+import catalog from './data/products.json'
 import type { ProductStore } from './store.ts'
 
 export async function seedProducts(store: ProductStore): Promise<void> {
-  const filePath = path.join(import.meta.dirname, 'data', 'products.json')
-  const raw = await readFile(filePath, 'utf8')
-  const products = JSON.parse(raw) as Product[]
+  const products = catalog as Omit<Product, 'id'>[]
   const inserted = await store.seedIfEmpty(
     products.map(({ title, price, description, category, image, rating, stock }) => ({
       title,

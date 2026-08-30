@@ -2,6 +2,10 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   async rewrites() {
+    if (process.env.VERCEL) {
+      return []
+    }
+
     return [
       {
         source: '/api/:path*',

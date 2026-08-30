@@ -47,6 +47,8 @@ npm run dev
 Shop: [http://localhost:5173](http://localhost:5173)  
 Admin: [http://localhost:5173/admin](http://localhost:5173/admin)
 
+On Vercel, set the same env vars and allow Atlas access from `0.0.0.0/0` (Network Access). The Next.js app serves `/api` on the same host.
+
 ## Routes
 
 | Path | Purpose |
