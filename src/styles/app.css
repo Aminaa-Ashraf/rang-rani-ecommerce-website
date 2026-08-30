@@ -748,49 +748,6 @@ label {
   cursor: pointer;
 }
 
-#shop .card-hover {
-  position: absolute;
-  left: 10px;
-  right: 10px;
-  bottom: 10px;
-  z-index: 2;
-  display: grid;
-  gap: 6px;
-  opacity: 0;
-  transform: translateY(8px);
-  pointer-events: none;
-  transition: opacity var(--ease), transform var(--ease);
-}
-
-#shop .shop-card:hover .card-hover,
-#shop .shop-card:focus-within .card-hover {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-#shop .card-hover-btn {
-  width: 100%;
-  padding: 8px 10px;
-  border: 0;
-  border-radius: 12px;
-  background: rgba(249, 247, 242, 0.96);
-  color: var(--maroon);
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-#shop .card-hover-btn:hover:not(:disabled) {
-  background: var(--gold);
-}
-
-#shop .card-hover-btn:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
-}
-
 #shop .card-title button {
   padding: 0;
   border: 0;
@@ -933,10 +890,9 @@ label {
 
 .card-media {
   position: relative;
-  aspect-ratio: 4 / 5;
-  max-height: 260px;
+  aspect-ratio: 1;
   overflow: hidden;
-  background: #2a1610;
+  background: #efe8dc;
 }
 
 .card.is-out .card-media img {
@@ -988,7 +944,7 @@ label {
 }
 
 .card:hover .card-media img {
-  transform: scale(1.06);
+  transform: scale(1.02);
 }
 
 .category-pill {
@@ -1039,8 +995,10 @@ label {
 
 .collection-card {
   display: grid;
-  gap: 10px;
-  padding: 32px 26px;
+  grid-template-rows: auto 1fr;
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
   text-align: left;
   text-decoration: none;
   cursor: pointer;
@@ -1049,15 +1007,27 @@ label {
   transition: transform var(--ease), box-shadow var(--ease);
 }
 
+.collection-card img,
+.collection-photo-empty {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
+}
+
+.collection-photo-empty {
+  background: linear-gradient(180deg, #f3eee4 0%, #e8e0d2 100%);
+}
+
+.collection-card-copy {
+  display: grid;
+  gap: 6px;
+  padding: 16px 18px 20px;
+}
+
 .collection-card:hover {
   transform: translateY(-6px);
   box-shadow: var(--shadow);
-}
-
-.collection-motif {
-  width: 28px;
-  height: 28px;
-  color: var(--gold);
 }
 
 .collection-card span {

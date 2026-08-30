@@ -154,4 +154,20 @@ export class ProductApi {
     const result = await fetchData<ApiSuccess<ShopOrder[]>>(`${this.baseUrl}/orders`)
     return result.data
   }
+
+  public async sendOrderEmail(input: {
+    name: string
+    email: string
+    phone: string
+    city: string
+    address: string
+    items: { productId: string; title: string; price: number; quantity: number; image: string }[]
+    total: number
+    viewUrl: string
+  }): Promise<void> {
+    await fetchData<ApiSuccess<{ sent: boolean; via: string }>>(`${this.baseUrl}/notify-order`, {
+      method: 'POST',
+      body: JSON.stringify(input),
+    })
+  }
 }

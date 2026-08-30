@@ -9,13 +9,12 @@ export function Footer() {
           <div>
             <p className="footer-name">Rang Rani</p>
             <p className="footer-domain">rangrani.pk</p>
-            <p className="footer-blurb">Jewelry from Lahore. Beads, kundan, charms, and bridal sets.</p>
+            <p className="footer-blurb">Bangles & bracelets from Lahore. Beaded, kundan, charm, and bridal styles.</p>
           </div>
           <div>
             <p className="footer-label">Shop</p>
             <Link to="/">Home</Link>
-            <Link to="/shop">Jewelry wall</Link>
-            <Link to="/collections">Collections</Link>
+            <Link to="/shop">Bangle wall</Link>
           </div>
           <div>
             <p className="footer-label">Studio</p>

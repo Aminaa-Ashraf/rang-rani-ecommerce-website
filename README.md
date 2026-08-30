@@ -1,8 +1,8 @@
 # Rang Rani Ecommerce Website
 
-A Lahore jewelry shop - browse the wall, add pieces, and send an order without a separate sign-in page.
+A Lahore bangle and bracelet shop - browse the wall, add pieces, and send an order without a separate sign-in page.
 
-Beaded, kundan, charm, and bridal collections · PKR · Vite + React + Firebase
+Beaded bracelets, kundan bangles, charm bracelets, and bridal bangles · PKR · Vite + React + Firebase
 
 <p>
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white" />
@@ -51,8 +51,7 @@ Admin: [http://localhost:5173/admin](http://localhost:5173/admin)
 | Path | Purpose |
 |------|---------|
 | `/` | Home |
-| `/shop` | Jewelry wall, cart, checkout |
-| `/collections` | Four families |
+| `/shop` | Bangle wall, cart, checkout |
 | `/about` | Studio story |
 | `/faq` | Common questions |
 | `/contact` | Write to the studio |

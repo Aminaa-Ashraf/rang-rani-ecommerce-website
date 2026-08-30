@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import type { ApiStatus, CartItem, Customer, Product, ProductCategory } from '../shared/types.ts'
 import { ProductApi } from './api/client.ts'
 import { CartDrawer } from './components/CartDrawer.tsx'
@@ -18,7 +18,6 @@ import {
 } from './lib/shopAuth.ts'
 import { AboutPage } from './pages/AboutPage.tsx'
 import { AccountPage } from './pages/AccountPage.tsx'
-import { CollectionsPage } from './pages/CollectionsPage.tsx'
 import { ContactPage } from './pages/ContactPage.tsx'
 import { FaqPage } from './pages/FaqPage.tsx'
 import { HomePage } from './pages/HomePage.tsx'
@@ -281,7 +280,7 @@ export function App() {
             />
           }
         />
-        <Route path="/collections" element={<CollectionsPage />} />
+        <Route path="/collections" element={<Navigate to="/shop" replace />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/faq" element={<FaqPage />} />
         <Route path="/contact" element={<ContactPage />} />

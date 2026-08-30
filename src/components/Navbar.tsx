@@ -4,7 +4,6 @@ import type { Customer } from '../../shared/types.ts'
 const links = [
   { to: '/', label: 'Home', end: true },
   { to: '/shop', label: 'Shop', end: false },
-  { to: '/collections', label: 'Collections', end: false },
   { to: '/about', label: 'About', end: false },
   { to: '/faq', label: 'FAQ', end: false },
   { to: '/contact', label: 'Contact', end: false },

@@ -3,7 +3,7 @@
     "title": "Gulab Moti Beads",
     "price": 300,
     "description": "Maroon and cream beads with a red rose charm.",
-    "category": "beaded",
+    "category": "charm",
     "image": "/images/rose-beads.jpg",
     "rating": {
       "rate": 4.8,
@@ -12,35 +12,11 @@
     "stock": 12
   },
   {
-    "title": "Moti Mini Stack",
-    "price": 280,
-    "description": "Small pearl beads for a soft everyday stack.",
-    "category": "beaded",
-    "image": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=800&q=80",
-    "rating": {
-      "rate": 4.4,
-      "count": 37
-    },
-    "stock": 8
-  },
-  {
-    "title": "Paisley Stone Bangle",
-    "price": 350,
-    "description": "Gold bangle with a paisley stone pattern.",
-    "category": "beaded",
-    "image": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=800&q=80",
-    "rating": {
-      "rate": 4.3,
-      "count": 27
-    },
-    "stock": 4
-  },
-  {
-    "title": "Coral Bead Line",
+    "title": "Sabz Stone Beads",
     "price": 250,
-    "description": "Warm coral beads on a simple stretch line.",
+    "description": "Green stone beads with gold and silver sparkle spacers.",
     "category": "beaded",
-    "image": "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=800&q=80",
+    "image": "/images/sabz-stone-beads.jpg",
     "rating": {
       "rate": 4.4,
       "count": 44
@@ -48,11 +24,47 @@
     "stock": 2
   },
   {
-    "title": "Mehndi Gold Set",
+    "title": "Phool Purple Beads",
+    "price": 320,
+    "description": "Milky beads with purple stones and a gold flower charm.",
+    "category": "beaded",
+    "image": "/images/phool-purple-beads.jpg",
+    "rating": {
+      "rate": 4.5,
+      "count": 22
+    },
+    "stock": 7
+  },
+  {
+    "title": "Dhooan Quartz Line",
+    "price": 300,
+    "description": "Smoky brown quartz beads with slim silver spacers.",
+    "category": "beaded",
+    "image": "/images/dhooan-quartz-line.jpg",
+    "rating": {
+      "rate": 4.4,
+      "count": 18
+    },
+    "stock": 6
+  },
+  {
+    "title": "Rangin Moti Stack",
+    "price": 330,
+    "description": "Maroon, cream, and mustard beads with silver caps.",
+    "category": "beaded",
+    "image": "/images/rangin-moti-stack.jpg",
+    "rating": {
+      "rate": 4.6,
+      "count": 25
+    },
+    "stock": 5
+  },
+  {
+    "title": "Patti Kundan Pair",
     "price": 650,
-    "description": "Gold jewelry set for mehndi night.",
+    "description": "Gold leaf kundan pair with a thin green meenakari edge.",
     "category": "kundan",
-    "image": "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=800&q=80",
+    "image": "/images/patti-kundan-pair.jpg",
     "rating": {
       "rate": 4.9,
       "count": 88
@@ -60,11 +72,11 @@
     "stock": 5
   },
   {
-    "title": "Neelam Stone Set",
+    "title": "Laal Resham Kundan",
     "price": 580,
-    "description": "Blue stone jewelry — not pink. Cool neelam shine.",
+    "description": "Maroon thread bangles with kundan floral ends.",
     "category": "kundan",
-    "image": "https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=800&q=80",
+    "image": "/images/laal-resham-kundan.jpg",
     "rating": {
       "rate": 4.9,
       "count": 71
@@ -72,11 +84,11 @@
     "stock": 3
   },
   {
-    "title": "Sheesh Gold Drops",
+    "title": "Gulabi Resham Kundan",
     "price": 720,
-    "description": "Bright gold drop jewelry for the baraat walk.",
+    "description": "Dusty-rose thread stack with four kundan kadas.",
     "category": "kundan",
-    "image": "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=800&q=80",
+    "image": "/images/gulabi-resham-kundan.jpg",
     "rating": {
       "rate": 4.8,
       "count": 19
@@ -84,11 +96,11 @@
     "stock": 1
   },
   {
-    "title": "Sona Ring Band",
+    "title": "Jamni Kundan Pair",
     "price": 550,
-    "description": "A slim gold ring band with a clear stone.",
+    "description": "Purple resham bangles with leaf stones and crystal flowers.",
     "category": "kundan",
-    "image": "https://images.unsplash.com/photo-1603561596112-0a132b757442?auto=format&fit=crop&w=800&q=80",
+    "image": "/images/jamni-kundan-pair.jpg",
     "rating": {
       "rate": 4.8,
       "count": 17
@@ -96,11 +108,11 @@
     "stock": 6
   },
   {
-    "title": "Aftab Smiley Beads",
+    "title": "Chand Sitara Charm",
     "price": 300,
-    "description": "Yellow and red beads with a gold smiley charm.",
+    "description": "White beads with a moon, star, and gold charm on the strand.",
     "category": "charm",
-    "image": "/images/sun-beads.png",
+    "image": "/images/chand-sitara-charm.jpg",
     "rating": {
       "rate": 4.7,
       "count": 41
@@ -108,23 +120,23 @@
     "stock": 10
   },
   {
-    "title": "Chain Charm Bracelet",
+    "title": "Hex Sitara Beads",
     "price": 400,
-    "description": "A slim chain bracelet with one hanging charm.",
+    "description": "White beads with green and purple stones and a star charm.",
     "category": "charm",
-    "image": "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&w=800&q=80",
+    "image": "/images/hex-sitara-beads.jpg",
     "rating": {
       "rate": 4.6,
       "count": 48
     },
-    "stock": 0
+    "stock": 6
   },
   {
-    "title": "Leather Charm Wrap",
+    "title": "Dil Charm Bracelet",
     "price": 450,
-    "description": "A wrap bracelet with a small metal charm.",
+    "description": "Gold, silver, and rose beads with three heart charms.",
     "category": "charm",
-    "image": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&q=80",
+    "image": "/images/dil-charm-bracelet.jpg",
     "rating": {
       "rate": 4.7,
       "count": 31
@@ -132,23 +144,11 @@
     "stock": 7
   },
   {
-    "title": "Lal Bazaar Beads",
-    "price": 350,
-    "description": "Red beads and pearls from a busy jewelry stall.",
-    "category": "charm",
-    "image": "/images/market-stack.jpg",
-    "rating": {
-      "rate": 4.5,
-      "count": 28
-    },
-    "stock": 9
-  },
-  {
-    "title": "Velvet Gold Bangles",
+    "title": "Laal Gold Chooda",
     "price": 850,
-    "description": "Ornate gold bangles on a bridal velvet tray.",
+    "description": "Red velvet and gold chooda stacked for mehndi and shaadi.",
     "category": "bridal",
-    "image": "/images/hero-kangans.jpg",
+    "image": "/images/laal-gold-chooda.jpg",
     "rating": {
       "rate": 4.6,
       "count": 29
@@ -156,11 +156,11 @@
     "stock": 2
   },
   {
-    "title": "Pearl Bridal Cuff",
+    "title": "Sabz Bridal Bangles",
     "price": 500,
-    "description": "A white pearl cuff for shaadi mornings.",
+    "description": "Green glitter bangles with gold and pearl edges for the shaadi week.",
     "category": "bridal",
-    "image": "https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?auto=format&fit=crop&w=800&q=80",
+    "image": "/images/sabz-bridal-bangles.jpg",
     "rating": {
       "rate": 4.8,
       "count": 33
@@ -168,23 +168,23 @@
     "stock": 4
   },
   {
-    "title": "Shaadi Night Set",
-    "price": 950,
-    "description": "A heavier bridal jewelry set for mehndi and walima.",
+    "title": "Rani Pink Velvet Bangles",
+    "price": 650,
+    "description": "Rani-pink velvet kara with thread and gold bangles for a festive set.",
     "category": "bridal",
-    "image": "https://images.unsplash.com/photo-1515562149607-3cf6d76c4c0c?auto=format&fit=crop&w=800&q=80",
+    "image": "/images/rani-pink-velvet.jpg",
     "rating": {
-      "rate": 4.9,
-      "count": 14
+      "rate": 4.7,
+      "count": 12
     },
-    "stock": 1
+    "stock": 5
   },
   {
-    "title": "Phool Filigree Set",
+    "title": "Sona Velvet Pair",
     "price": 750,
-    "description": "Gold filigree bangle and matching ring with flower stones.",
+    "description": "Two gold bangles in a red velvet tray.",
     "category": "bridal",
-    "image": "/images/filigree-set.jpg",
+    "image": "/images/sona-velvet-pair.jpg",
     "rating": {
       "rate": 4.7,
       "count": 21

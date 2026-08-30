@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import type { Product } from '../../shared/types.ts'
 import { ProductCard } from './ProductCard.tsx'
 
-const PAGE_SIZE = 4
+const PAGE_SIZE = 8
 
 interface ProductGridProps {
   products: Product[]

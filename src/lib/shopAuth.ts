@@ -19,9 +19,10 @@ import {
   where,
 } from 'firebase/firestore'
 import type { CartItem, Customer, ShopOrder } from '../../shared/types.ts'
+import { buildOrderEmail } from '../../shared/orderEmail.ts'
+import { ProductApi } from '../api/client.ts'
 import { STUDIO_EMAIL } from './contact.ts'
 import { auth, db } from './firebase.ts'
-import { formatPrice } from './money.ts'
 
 export interface CheckoutDetails {
   name: string
@@ -97,7 +98,13 @@ export async function signInShop(email: string, password: string): Promise<Custo
   }
 }
 
-export async function checkoutNewCustomer(details: CheckoutDetails, items: CartItem[]): Promise<void> {
+const api = new ProductApi()
+
+export async function checkoutNewCustomer(
+  details: CheckoutDetails,
+  items: CartItem[],
+  shopUrl = window.location.origin,
+): Promise<void> {
   let user: User
   try {
     const result = await createUserWithEmailAndPassword(auth, details.email.trim(), guestSecret())
@@ -115,7 +122,7 @@ export async function checkoutNewCustomer(details: CheckoutDetails, items: CartI
     }
   }
   const customer = await saveCustomerRecord(user.uid, details)
-  await writeOrder(user, customer, items, details.city, details.address)
+  await writeOrder(user, customer, items, details.city, details.address, shopUrl)
 }
 
 export async function placeSignedInOrder(
@@ -124,6 +131,7 @@ export async function placeSignedInOrder(
   city: string,
   address: string,
   items: CartItem[],
+  shopUrl = window.location.origin,
 ): Promise<void> {
   const next = await saveCustomerRecord(user.uid, {
     name: customer.name,
@@ -132,7 +140,7 @@ export async function placeSignedInOrder(
     city,
     address,
   })
-  await writeOrder(user, next, items, city, address)
+  await writeOrder(user, next, items, city, address, shopUrl)
 }
 
 async function writeOrder(
@@ -141,6 +149,7 @@ async function writeOrder(
   items: CartItem[],
   city: string,
   address: string,
+  shopUrl: string,
 ): Promise<void> {
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
   await addDoc(collection(db, 'orders'), {
@@ -160,43 +169,39 @@ async function writeOrder(
     total,
     createdAt: serverTimestamp(),
   })
-  await queueOrderEmail(user.uid, customer, items, city, address, total)
-}
-
-async function queueOrderEmail(
-  uid: string,
-  customer: Customer,
-  items: CartItem[],
-  city: string,
-  address: string,
-  total: number,
-): Promise<void> {
-  const lines = items.map((item) => `${item.title} × ${item.quantity} — ${formatPrice(item.price * item.quantity)}`)
-  const text = [
-    `Hi ${customer.name},`,
-    '',
-    'You placed an order with Rang Rani.',
-    '',
-    ...lines,
-    '',
-    `Total: ${formatPrice(total)}`,
-    `Ship to: ${address}, ${city}`,
-    '',
-    'The Lahore studio will write back to confirm.',
-  ].join('\n')
-
+  const viewUrl = `${shopUrl.replace(/\/$/, '')}/account`
+  const notice = {
+    name: customer.name,
+    email: customer.email,
+    phone: customer.phone,
+    city: city.trim(),
+    address: address.trim(),
+    items: items.map((item) => ({
+      productId: item.id,
+      title: item.title,
+      price: item.price,
+      quantity: item.quantity,
+      image: item.image,
+    })),
+    total,
+    viewUrl,
+  }
+  const mail = buildOrderEmail(notice)
   await addDoc(collection(db, 'mail'), {
-    uid,
+    uid: user.uid,
     to: customer.email,
     replyTo: STUDIO_EMAIL,
     message: {
-      subject: `Rang Rani — you placed an order (${formatPrice(total)})`,
-      text,
-      html: `<p>Hi ${customer.name},</p><p>You placed an order with Rang Rani.</p><ul>${items
-        .map((item) => `<li>${item.title} × ${item.quantity} — ${formatPrice(item.price * item.quantity)}</li>`)
-        .join('')}</ul><p><strong>Total: ${formatPrice(total)}</strong></p><p>Ship to: ${address}, ${city}</p><p>The Lahore studio will write back to confirm.</p>`,
+      subject: mail.subject,
+      text: mail.text,
+      html: mail.html,
     },
   })
+  try {
+    await api.sendOrderEmail(notice)
+  } catch (error) {
+    console.error('Order email was saved in Firebase but the inbox send failed', error)
+  }
 }
 
 export async function loadOrders(uid: string): Promise<ShopOrder[]> {

@@ -1,9 +1,17 @@
 import { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { isProductCategory } from '../../shared/types.ts'
+import { isProductCategory, ProductCategory, type Product } from '../../shared/types.ts'
 import { ProductGrid } from '../components/ProductGrid.tsx'
 import { Toolbar } from '../components/Toolbar.tsx'
-import type { Product, ProductCategory } from '../../shared/types.ts'
+
+const shopCategoryLabel: Record<ProductCategory, string> = {
+  [ProductCategory.Beaded]: 'Beaded Bracelets',
+  [ProductCategory.Kundan]: 'Kundan Bangles',
+  [ProductCategory.Charm]: 'Charm Bracelets',
+  [ProductCategory.Bridal]: 'Bridal Bangles',
+  [ProductCategory.Friendship]: 'Friendship',
+  [ProductCategory.GoldPlated]: 'Gold plated',
+}
 
 interface ShopPageProps {
   products: Product[]
@@ -44,7 +52,7 @@ export function ShopPage({
           <div>
             <p className="eyebrow">Shop</p>
             <h2 className="has-rule">
-              The jewelry <em>wall</em>
+              The bangle <em>wall</em>
             </h2>
           </div>
         </div>
@@ -55,7 +63,7 @@ export function ShopPage({
             type="button"
             onClick={() => onCategoryChange('all')}
           >
-            All jewelry
+            All bangles
           </button>
           {categories.map((item) => (
             <button
@@ -64,7 +72,7 @@ export function ShopPage({
               type="button"
               onClick={() => onCategoryChange(item)}
             >
-              {item}
+              {shopCategoryLabel[item] ?? item}
             </button>
           ))}
         </div>

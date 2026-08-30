@@ -5,6 +5,7 @@ import type { CustomerStore } from './customerStore.ts'
 import type { OrderStore } from './orderStore.ts'
 import { createProductRouter } from './routes/products.ts'
 import { createShopAuthRouter } from './routes/shopAuth.ts'
+import { createNotifyRouter } from './routes/notify.ts'
 import { createStockRouter } from './routes/stock.ts'
 import type { ProductService } from './productService.ts'
 
@@ -34,6 +35,7 @@ export function createApp(
 
   app.use('/api/products', createProductRouter(service))
   app.use('/api/stock', createStockRouter(service))
+  app.use('/api', createNotifyRouter())
   app.use('/api', createShopAuthRouter(customers, orders, service))
 
   app.use((_req, res) => {

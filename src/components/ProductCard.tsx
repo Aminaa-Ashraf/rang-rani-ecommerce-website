@@ -23,19 +23,6 @@ export function ProductCard({ product, cartQty, onSelect, onAdd, onQuantity }: P
         {level !== 'in' ? (
           <span className={`stock-badge is-${level}`}>{stockLabel(product.stock)}</span>
         ) : null}
-        <div className="card-hover">
-          <button className="card-hover-btn" type="button" onClick={() => onSelect(product.id)}>
-            Quick view
-          </button>
-          <button
-            className="card-hover-btn"
-            type="button"
-            onClick={() => onAdd(product)}
-            disabled={out || atMax}
-          >
-            {out ? 'Out of stock' : cartQty > 0 ? 'Add one more' : 'Add to cart'}
-          </button>
-        </div>
       </div>
       <div className="card-body">
         <p className="category-pill">{product.category}</p>
