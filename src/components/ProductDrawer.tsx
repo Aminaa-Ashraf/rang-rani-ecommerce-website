@@ -1,21 +1,18 @@
 import { useState } from 'react'
-import { stockLabel, stockLevel, type Product } from '../../shared/types.ts'
-import { formatPrice } from '../lib/money.ts'
+import { stockLabel, stockLevel, type Product } from '../../shared/types'
+import { formatPrice } from '../lib/money'
 
 const wristSizes = ['2.2', '2.4', '2.6']
 
 interface ProductDrawerProps {
   product: Product
-  cartQty: number
   onClose: () => void
   onAddToCart: (product: Product) => void
-  onQuantity: (id: string, quantity: number) => void
 }
 
-export function ProductDrawer({ product, cartQty, onClose, onAddToCart, onQuantity }: ProductDrawerProps) {
+export function ProductDrawer({ product, onClose, onAddToCart }: ProductDrawerProps) {
   const [size, setSize] = useState(wristSizes[1])
   const available = product.stock > 0
-  const atMax = cartQty >= product.stock
 
   return (
     <div className="overlay" onClick={onClose} role="presentation">
@@ -54,33 +51,12 @@ export function ProductDrawer({ product, cartQty, onClose, onAddToCart, onQuanti
             ))}
           </div>
           <div className="actions">
-            {!available ? (
-              <button className="btn primary" type="button" disabled>
-                Out of stock
-              </button>
-            ) : cartQty > 0 ? (
-              <div className="card-qty">
-                <button className="stepper-btn" type="button" onClick={() => onQuantity(product.id, cartQty - 1)}>
-                  −
-                </button>
-                <span>{cartQty}</span>
-                <button
-                  className="stepper-btn"
-                  type="button"
-                  onClick={() => onQuantity(product.id, cartQty + 1)}
-                  disabled={atMax}
-                >
-                  +
-                </button>
-              </div>
-            ) : (
-              <button className="btn primary" type="button" onClick={() => onAddToCart(product)}>
-                Add to cart
-              </button>
-            )}
+            <button className="btn primary" type="button" disabled={!available} onClick={() => onAddToCart(product)}>
+              {available ? 'Add to cart' : 'Out of stock'}
+            </button>
           </div>
           <p>{product.description}</p>
-          <p className="muted">Handmade in Lahore · size {size}</p>
+          <p className="muted">From Lahore · size {size}</p>
         </div>
       </aside>
     </div>

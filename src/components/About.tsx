@@ -8,8 +8,8 @@ export function About() {
             A bangle studio from <em>Lahore</em>
           </h2>
           <p className="lede">
-            Rang Rani began on a small table in Lahore — moti counted by hand, kundan bangles
-            chosen for shaadi, charm bracelets picked for stacking. The wall is still short on purpose.
+            Rang Rani began on a small table in Lahore — moti for stacking, kundan bangles
+            chosen for shaadi, charm bracelets picked for play. The wall is still short on purpose.
           </p>
           <p className="lede">
             We keep four families only: beaded bracelets, kundan bangles, charm bracelets, and bridal bangles.

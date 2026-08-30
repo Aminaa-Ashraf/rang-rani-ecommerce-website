@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom'
-import { STUDIO_MAIL } from '../lib/contact.ts'
+import { STUDIO_MAIL } from '../lib/contact'
+import { Link } from '../lib/nav'
 
 export function Footer() {
   return (
@@ -14,7 +14,7 @@ export function Footer() {
           <div>
             <p className="footer-label">Shop</p>
             <Link to="/">Home</Link>
-            <Link to="/shop">Bangle wall</Link>
+            <Link to="/shop">Shop</Link>
           </div>
           <div>
             <p className="footer-label">Studio</p>

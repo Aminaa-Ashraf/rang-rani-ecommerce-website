@@ -1,4 +1,4 @@
-import { STUDIO_EMAIL } from '../lib/contact.ts'
+import { STUDIO_EMAIL } from '../lib/contact'
 
 const faqs = [
   {
@@ -6,8 +6,8 @@ const faqs = [
     a: 'No. Look around, add what you like. At checkout we only ask name, email, phone, city, and address. There is no password.',
   },
   {
-    q: 'I put things in the bag. What do I do next?',
-    a: 'Open the cart, check the pieces, then press Done. Fill your details and send the order. We email you when it is in.',
+    q: 'I put things in the cart. What do I do next?',
+    a: 'Open the cart, check the pieces, then press Checkout. Fill your details and send the order. We email you when it is in.',
   },
   {
     q: 'Do you deliver outside Lahore?',

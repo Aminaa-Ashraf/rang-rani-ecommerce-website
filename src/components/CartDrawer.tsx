@@ -1,69 +1,18 @@
-import { useEffect, useState, type FormEvent } from 'react'
-import type { CartItem, Customer } from '../../shared/types.ts'
-import type { CheckoutDetails } from '../lib/shopAuth.ts'
-import { formatPrice } from '../lib/money.ts'
+'use client'
+
+import { useRouter } from 'next/navigation'
+import type { CartItem } from '../../shared/types'
+import { formatPrice } from '../lib/money'
 
 interface CartDrawerProps {
   items: CartItem[]
-  customer: Customer | null
-  authError: string | null
-  authSaving: boolean
-  orderError: string | null
   onClose: () => void
   onQuantity: (id: string, quantity: number) => void
-  onCheckoutNew: (details: CheckoutDetails) => Promise<void>
-  onPlaceOrder: (city: string, address: string) => Promise<void>
 }
 
-export function CartDrawer({
-  items,
-  customer,
-  authError,
-  authSaving,
-  orderError,
-  onClose,
-  onQuantity,
-  onCheckoutNew,
-  onPlaceOrder,
-}: CartDrawerProps) {
-  const [placed, setPlaced] = useState(false)
-  const [step, setStep] = useState<'bag' | 'checkout'>('bag')
-  const [name, setName] = useState(customer?.name ?? '')
-  const [email, setEmail] = useState(customer?.email ?? '')
-  const [phone, setPhone] = useState(customer?.phone ?? '')
-  const [city, setCity] = useState(customer?.city ?? '')
-  const [address, setAddress] = useState(customer?.address ?? '')
-  const [saving, setSaving] = useState(false)
-  const [sentTo, setSentTo] = useState('')
-
-  useEffect(() => {
-    setName(customer?.name ?? '')
-    setEmail(customer?.email ?? '')
-    setPhone(customer?.phone ?? '')
-    setCity(customer?.city ?? '')
-    setAddress(customer?.address ?? '')
-  }, [customer])
-
+export function CartDrawer({ items, onClose, onQuantity }: CartDrawerProps) {
+  const router = useRouter()
   const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
-
-  async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
-    event.preventDefault()
-    setSaving(true)
-    try {
-      if (customer) {
-        await onPlaceOrder(city, address)
-        setSentTo(customer.email)
-      } else {
-        await onCheckoutNew({ name, email, phone, city, address })
-        setSentTo(email.trim())
-      }
-      setPlaced(true)
-    } catch {
-      // parent shows the error
-    } finally {
-      setSaving(false)
-    }
-  }
 
   return (
     <div className="overlay overlay-drawer" onClick={onClose} role="presentation">
@@ -75,35 +24,33 @@ export function CartDrawer({
       >
         <header className="cart-head">
           <div>
-            <p className="eyebrow">{step === 'checkout' ? 'Checkout' : 'Cart'}</p>
-            <h2 id="cart-title">{placed ? 'Order received' : step === 'checkout' ? 'Your details' : 'Your bag'}</h2>
+            <p className="eyebrow">Cart</p>
+            <h2 id="cart-title">Your cart</h2>
           </div>
           <button className="cart-close" type="button" onClick={onClose} aria-label="Close cart">
             Close
           </button>
         </header>
 
-        {placed ? (
+        {items.length === 0 ? (
           <div className="cart-state">
-            <span className="cart-mark" aria-hidden="true" />
-            <h3>Thank you</h3>
-            <p className="lede">
-              Your order is placed. A confirmation is going to <strong>{sentTo || 'your email'}</strong>.
-            </p>
+            <span className="cart-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  d="M5 7h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 7Zm3.2 0V6.2A3.8 3.8 0 0 1 12 2.4a3.8 3.8 0 0 1 3.8 3.8V7"
+                />
+              </svg>
+            </span>
+            <h3>Your cart is empty</h3>
+            <p className="lede">Add bangles or bracelets from the wall.</p>
             <button className="btn primary" type="button" onClick={onClose}>
               Keep shopping
             </button>
           </div>
-        ) : items.length === 0 ? (
-          <div className="cart-state">
-            <span className="cart-mark" aria-hidden="true" />
-            <h3>Your bag is empty</h3>
-            <p className="lede">Add jewelry, then press Done when you are ready.</p>
-            <button className="btn primary" type="button" onClick={onClose}>
-              Keep shopping
-            </button>
-          </div>
-        ) : step === 'bag' ? (
+        ) : (
           <>
             <div className="cart-items">
               {items.map((item) => (
@@ -141,64 +88,29 @@ export function CartDrawer({
                 <span>Subtotal</span>
                 <strong className="summary-total">{formatPrice(subtotal)}</strong>
               </div>
-              <button className="btn ghost" type="button" onClick={onClose}>
-                Keep shopping
+              <p className="muted cart-note">Shipping is set at checkout.</p>
+              <button
+                className="btn primary cart-checkout"
+                type="button"
+                onClick={() => {
+                  onClose()
+                  router.push('/checkout')
+                }}
+              >
+                Proceed to checkout
               </button>
-              <button className="btn primary cart-checkout" type="button" onClick={() => setStep('checkout')}>
-                Done
+              <button
+                className="btn ghost cart-checkout"
+                type="button"
+                onClick={() => {
+                  onClose()
+                  router.push('/cart')
+                }}
+              >
+                View cart
               </button>
             </div>
           </>
-        ) : (
-          <form className="form cart-checkout-form" onSubmit={(event) => void handleSubmit(event)}>
-            <ul className="cart-summary-list">
-              {items.map((item) => (
-                <li key={item.id}>
-                  <span>
-                    {item.title} × {item.quantity}
-                  </span>
-                  <strong>{formatPrice(item.price * item.quantity)}</strong>
-                </li>
-              ))}
-            </ul>
-            {customer ? (
-              <p className="cart-note">
-                Sending to <strong>{customer.name}</strong> · {customer.email}
-              </p>
-            ) : (
-              <>
-                <label>
-                  Name
-                  <input value={name} onChange={(event) => setName(event.target.value)} required autoComplete="name" />
-                </label>
-                <label>
-                  Email
-                  <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} required autoComplete="email" />
-                </label>
-                <label>
-                  Phone
-                  <input value={phone} onChange={(event) => setPhone(event.target.value)} required autoComplete="tel" />
-                </label>
-              </>
-            )}
-            <div className="cart-fields">
-              <label>
-                City
-                <input value={city} onChange={(event) => setCity(event.target.value)} required />
-              </label>
-              <label>
-                Address
-                <input value={address} onChange={(event) => setAddress(event.target.value)} required />
-              </label>
-            </div>
-            {authError || orderError ? <p className="error">{authError ?? orderError}</p> : null}
-            <button className="btn ghost" type="button" onClick={() => setStep('bag')}>
-              Back to bag
-            </button>
-            <button className="btn primary cart-checkout" type="submit" disabled={saving || authSaving}>
-              {saving || authSaving ? 'Saving...' : 'Place order'}
-            </button>
-          </form>
         )}
       </aside>
     </div>

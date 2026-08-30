@@ -1,8 +1,10 @@
+'use client'
+
 import { useEffect, useState } from 'react'
-import { Navigate } from 'react-router-dom'
-import type { Customer, ShopOrder } from '../../shared/types.ts'
-import { formatPrice } from '../lib/money.ts'
-import { loadOrders } from '../lib/shopAuth.ts'
+import type { Customer, ShopOrder } from '../../shared/types'
+import { formatPrice } from '../lib/money'
+import { Navigate } from '../lib/nav'
+import { loadOrders } from '../lib/shopAuth'
 
 interface AccountPageProps {
   customer: Customer | null

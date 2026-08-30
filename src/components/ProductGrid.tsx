@@ -1,24 +1,16 @@
 import { useEffect, useState } from 'react'
-import type { Product } from '../../shared/types.ts'
-import { ProductCard } from './ProductCard.tsx'
+import type { Product } from '../../shared/types'
+import { ProductCard } from './ProductCard'
 
 const PAGE_SIZE = 8
 
 interface ProductGridProps {
   products: Product[]
-  cartQty?: Record<string, number>
   onSelect: (id: string) => void
   onAdd: (product: Product) => void
-  onQuantity: (id: string, quantity: number) => void
 }
 
-export function ProductGrid({
-  products,
-  cartQty = {},
-  onSelect,
-  onAdd,
-  onQuantity,
-}: ProductGridProps) {
+export function ProductGrid({ products, onSelect, onAdd }: ProductGridProps) {
   const [page, setPage] = useState(0)
 
   useEffect(() => {
@@ -26,7 +18,7 @@ export function ProductGrid({
   }, [products])
 
   if (products.length === 0) {
-    return <p className="page-status">No jewelry in this filter. Try another collection.</p>
+    return <p className="page-status">No pieces here. Try another name or collection.</p>
   }
 
   const pageCount = Math.ceil(products.length / PAGE_SIZE)
@@ -37,21 +29,16 @@ export function ProductGrid({
     <div className="shop-pager">
       <section className="grid grid-four">
         {visible.map((product) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            cartQty={cartQty?.[product.id] ?? 0}
-            onSelect={onSelect}
-            onAdd={onAdd}
-            onQuantity={onQuantity}
-          />
+          <ProductCard key={product.id} product={product} onSelect={onSelect} onAdd={onAdd} />
         ))}
       </section>
       {pageCount > 1 ? (
         <div className="pager">
-          <button className="btn ghost" type="button" disabled={safePage === 0} onClick={() => setPage(safePage - 1)}>
-            Previous
-          </button>
+          {safePage > 0 ? (
+            <button className="btn ghost" type="button" onClick={() => setPage(safePage - 1)}>
+              Previous
+            </button>
+          ) : null}
           {Array.from({ length: pageCount }, (_, index) => (
             <button
               key={index}
@@ -62,14 +49,11 @@ export function ProductGrid({
               {index + 1}
             </button>
           ))}
-          <button
-            className="btn ghost"
-            type="button"
-            disabled={safePage >= pageCount - 1}
-            onClick={() => setPage(safePage + 1)}
-          >
-            Next
-          </button>
+          {safePage < pageCount - 1 ? (
+            <button className="btn ghost" type="button" onClick={() => setPage(safePage + 1)}>
+              Next
+            </button>
+          ) : null}
         </div>
       ) : null}
     </div>

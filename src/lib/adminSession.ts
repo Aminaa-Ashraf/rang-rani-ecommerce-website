@@ -1,6 +1,10 @@
 const STORAGE_KEY = 'rangrani-admin-key'
 
 export function getAdminKey(): string | null {
+  if (typeof window === 'undefined') {
+    return null
+  }
+
   return window.sessionStorage.getItem(STORAGE_KEY)
 }
 

@@ -1,4 +1,4 @@
-import { isApiFail } from '../../shared/types.ts'
+import { isApiFail } from '../../shared/types'
 import type {
   ApiSuccess,
   CreateProductInput,
@@ -11,9 +11,9 @@ import type {
   ProductId,
   RegisterInput,
   ShopOrder,
-} from '../../shared/types.ts'
-import { getAdminKey } from '../lib/adminSession.ts'
-import { getCustomerToken } from '../lib/customerSession.ts'
+} from '../../shared/types'
+import { getAdminKey } from '../lib/adminSession'
+import { getCustomerToken } from '../lib/customerSession'
 
 async function fetchData<T>(url: string, options?: RequestInit): Promise<T> {
   const adminKey = getAdminKey()
@@ -153,6 +153,34 @@ export class ProductApi {
   public async getOrders(): Promise<ShopOrder[]> {
     const result = await fetchData<ApiSuccess<ShopOrder[]>>(`${this.baseUrl}/orders`)
     return result.data
+  }
+
+  public async rememberOrderEmail(input: { name: string; email: string }): Promise<void> {
+    await fetchData<ApiSuccess<{ ok: boolean }>>(`${this.baseUrl}/order-email`, {
+      method: 'POST',
+      body: JSON.stringify(input),
+    })
+  }
+
+  public async sendReview(input: { name: string; email: string; text: string }): Promise<void> {
+    await fetchData<ApiSuccess<{ id: string }>>(`${this.baseUrl}/reviews`, {
+      method: 'POST',
+      body: JSON.stringify(input),
+    })
+  }
+
+  public async getReviews(): Promise<{ id: string; name: string; email: string; text: string; createdAt: string }[]> {
+    const result = await fetchData<
+      ApiSuccess<{ id: string; name: string; email: string; text: string; createdAt: string }[]>
+    >(`${this.baseUrl}/reviews`)
+    return result.data
+  }
+
+  public async sendStudioNote(input: { name: string; email: string; message: string }): Promise<void> {
+    await fetchData<ApiSuccess<{ sent: boolean; via: string }>>(`${this.baseUrl}/contact`, {
+      method: 'POST',
+      body: JSON.stringify(input),
+    })
   }
 
   public async sendOrderEmail(input: {

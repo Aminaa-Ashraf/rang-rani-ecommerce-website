@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react'
-import { isProductCategory, ProductCategory } from '../../shared/types.ts'
-import type { CreateProductInput, Product } from '../../shared/types.ts'
+import { isProductCategory, ProductCategory } from '../../shared/types'
+import type { CreateProductInput, Product } from '../../shared/types'
 
 interface ProductFormProps {
   categories: ProductCategory[]

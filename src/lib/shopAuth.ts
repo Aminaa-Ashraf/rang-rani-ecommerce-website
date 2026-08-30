@@ -18,11 +18,11 @@ import {
   setDoc,
   where,
 } from 'firebase/firestore'
-import type { CartItem, Customer, ShopOrder } from '../../shared/types.ts'
-import { buildOrderEmail } from '../../shared/orderEmail.ts'
-import { ProductApi } from '../api/client.ts'
-import { STUDIO_EMAIL } from './contact.ts'
-import { auth, db } from './firebase.ts'
+import type { CartItem, Customer, ShopOrder } from '../../shared/types'
+import { buildOrderEmail } from '../../shared/orderEmail'
+import { ProductApi } from '../api/client'
+import { STUDIO_EMAIL } from './contact'
+import { auth, db } from './firebase'
 
 export interface CheckoutDetails {
   name: string
@@ -52,6 +52,32 @@ function authCode(error: unknown): string {
     return String((error as { code: string }).code)
   }
   return ''
+}
+
+function checkoutAuthError(error: unknown): Error {
+  const code = authCode(error)
+  if (
+    code === 'auth/admin-restricted-operation' ||
+    code === 'auth/operation-not-allowed' ||
+    code === 'auth/api-key-not-valid.-please-pass-a-valid-api-key.'
+  ) {
+    return new Error('Checkout could not start. Try again in a moment.')
+  }
+  if (error instanceof Error && error.message.startsWith('Firebase:')) {
+    return new Error('Checkout could not start. Try again in a moment.')
+  }
+  return error instanceof Error ? error : new Error('Could not place the order')
+}
+
+async function guestUser(name: string): Promise<User> {
+  if (auth.currentUser) {
+    return auth.currentUser
+  }
+  const result = await signInAnonymously(auth)
+  if (name.trim()) {
+    await updateProfile(result.user, { displayName: name.trim() })
+  }
+  return result.user
 }
 
 export async function saveCustomerRecord(uid: string, details: CheckoutDetails): Promise<Customer> {
@@ -111,14 +137,19 @@ export async function checkoutNewCustomer(
     await updateProfile(result.user, { displayName: details.name.trim() })
     user = result.user
   } catch (error) {
-    if (authCode(error) !== 'auth/email-already-in-use') {
-      throw error
-    }
-    const existing = auth.currentUser
-    if (existing) {
-      user = existing
+    const code = authCode(error)
+    if (
+      code === 'auth/email-already-in-use' ||
+      code === 'auth/admin-restricted-operation' ||
+      code === 'auth/operation-not-allowed'
+    ) {
+      try {
+        user = await guestUser(details.name)
+      } catch (fallbackError) {
+        throw checkoutAuthError(fallbackError)
+      }
     } else {
-      user = (await signInAnonymously(auth)).user
+      throw checkoutAuthError(error)
     }
   }
   const customer = await saveCustomerRecord(user.uid, details)
@@ -169,7 +200,12 @@ async function writeOrder(
     total,
     createdAt: serverTimestamp(),
   })
-  const viewUrl = `${shopUrl.replace(/\/$/, '')}/account`
+  try {
+    await api.rememberOrderEmail({ name: customer.name, email: customer.email })
+  } catch (error) {
+    console.error('Could not mark this email as ready for a review', error)
+  }
+  const viewUrl = `${shopUrl.replace(/\/$/, '')}/shop`
   const notice = {
     name: customer.name,
     email: customer.email,

@@ -1,29 +1,29 @@
-import { Link } from 'react-router-dom'
-import { ProductCategory } from '../../shared/types.ts'
+import { ProductCategory } from '../../shared/types'
+import { Link } from '../lib/nav'
 
 const stories = [
   {
     category: ProductCategory.Beaded,
     title: 'Beaded Bracelets',
-    copy: 'Moti stacks and everyday beads.',
+    copy: 'For stacking on a regular day.',
     image: '/images/peela-moti-line.jpg',
   },
   {
     category: ProductCategory.Kundan,
     title: 'Kundan Bangles',
-    copy: 'Shaadi-ready shine.',
+    copy: 'When you want the gold to catch the light.',
     image: '/images/kundan-cover.jpg',
   },
   {
     category: ProductCategory.Charm,
     title: 'Charm Bracelets',
-    copy: 'Smileys, roses, and charm wraps.',
+    copy: 'The playful ones — roses, smileys, hearts.',
     image: '/images/rose-beads.jpg',
   },
   {
     category: ProductCategory.Bridal,
     title: 'Bridal Bangles',
-    copy: 'Bangles and sets for shaadi.',
+    copy: 'For the week of the wedding.',
     image: '/images/gulabi-chooda.jpg',
   },
 ] as const
@@ -32,9 +32,9 @@ export function Collections() {
   return (
     <section className="section" id="collections">
       <div>
-        <p className="eyebrow">Collections</p>
+        <p className="eyebrow">On the wall</p>
         <h2 className="has-rule">
-          Four families, <em>one wall</em>
+          Take the one that <em>feels</em> like you.
         </h2>
       </div>
       <div className="collection-grid">

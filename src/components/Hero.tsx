@@ -1,23 +1,24 @@
-import { Link } from 'react-router-dom'
+import { Link } from '../lib/nav'
 
 export function Hero() {
   return (
     <section className="hero" id="home">
       <div className="hero-inner">
         <div className="hero-copy">
-          <p className="eyebrow">Bangles · Lahore</p>
+          <p className="eyebrow">From our table in Lahore</p>
           <h1>
-            Royal bangles, <em>refined</em> for every day
+            Bangles from Lahore, <em>worn</em> on yours
           </h1>
           <p className="lede">
-            Bridal sets, stacked beads, and gold pieces — worn from mehndi night to everyday.
+            Moti for Tuesday, kundan for shine, a bridal stack when the week of the shaadi starts.
+            Nothing extra on the wall.
           </p>
           <div className="hero-actions">
             <Link className="btn primary" to="/shop">
-              Shop collection
+              See the wall
             </Link>
             <Link className="btn ghost" to="/about">
-              Our story
+              How we started
             </Link>
           </div>
         </div>

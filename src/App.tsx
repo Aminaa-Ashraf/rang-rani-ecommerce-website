@@ -1,13 +1,16 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom'
-import type { ApiStatus, CartItem, Customer, Product, ProductCategory } from '../shared/types.ts'
-import { ProductApi } from './api/client.ts'
-import { CartDrawer } from './components/CartDrawer.tsx'
-import { Footer } from './components/Footer.tsx'
-import { Navbar } from './components/Navbar.tsx'
-import { ProductDrawer } from './components/ProductDrawer.tsx'
-import { loadCart, saveCart } from './lib/cartStorage.ts'
-import { auth } from './lib/firebase.ts'
+'use client'
+
+import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { usePathname } from 'next/navigation'
+import type { ApiStatus, CartItem, Customer, Product, ProductCategory } from '../shared/types'
+import { ProductApi } from './api/client'
+import { CartDrawer } from './components/CartDrawer'
+import { Footer } from './components/Footer'
+import { Navbar } from './components/Navbar'
+import { ProductDrawer } from './components/ProductDrawer'
+import { loadCart, saveCart } from './lib/cartStorage'
+import { productMatchesSearch } from './lib/shopLabels'
+import { auth } from './lib/firebase'
 import {
   checkoutNewCustomer,
   loadCustomer,
@@ -15,18 +18,49 @@ import {
   signOutShop,
   watchAuth,
   type CheckoutDetails,
-} from './lib/shopAuth.ts'
-import { AboutPage } from './pages/AboutPage.tsx'
-import { AccountPage } from './pages/AccountPage.tsx'
-import { ContactPage } from './pages/ContactPage.tsx'
-import { FaqPage } from './pages/FaqPage.tsx'
-import { HomePage } from './pages/HomePage.tsx'
-import { ShopPage } from './pages/ShopPage.tsx'
-import { ScrollToTop } from './pages/ScrollToTop.tsx'
+} from './lib/shopAuth'
+import { ScrollToTop } from './views/ScrollToTop'
 
 const api = new ProductApi()
 
-export function App() {
+interface ShopContextValue {
+  visible: Product[]
+  categories: ProductCategory[]
+  search: string
+  category: ProductCategory | 'all'
+  setSearch: (value: string) => void
+  setCategory: (value: ProductCategory | 'all') => void
+  openProduct: (id: string) => Promise<void>
+  addToCart: (product: Product) => void
+  setCartQuantity: (id: string, quantity: number) => void
+  cartQty: Record<string, number>
+  cart: CartItem[]
+  customer: Customer | null
+  authError: string | null
+  orderError: string | null
+  authSaving: boolean
+  closeCart: () => void
+  checkout: (details: CheckoutDetails) => Promise<void>
+  signOutShop: () => Promise<void>
+}
+
+const ShopContext = createContext<ShopContextValue | null>(null)
+
+export function useShop(): ShopContextValue {
+  const value = useContext(ShopContext)
+  if (!value) {
+    throw new Error('useShop must be used inside ShopShell')
+  }
+  return value
+}
+
+interface ShopShellProps {
+  children: ReactNode
+}
+
+export function ShopShell({ children }: ShopShellProps) {
+  const pathname = usePathname()
+  const cartLocked = pathname === '/checkout' || pathname === '/thanks'
   const [status, setStatus] = useState<ApiStatus>('loading')
   const [error, setError] = useState<string | null>(null)
   const [products, setProducts] = useState<Product[]>([])
@@ -45,6 +79,12 @@ export function App() {
   useEffect(() => {
     saveCart(cart)
   }, [cart])
+
+  useEffect(() => {
+    if (cartLocked) {
+      setCartOpen(false)
+    }
+  }, [cartLocked])
 
   useEffect(() => {
     return watchAuth((user) => {
@@ -107,10 +147,10 @@ export function App() {
   }, [toast])
 
   const visible = useMemo(() => {
-    const query = search.trim().toLowerCase()
     return products.filter((product) => {
-      const matchesSearch = query.length === 0 || product.title.toLowerCase().includes(query)
-      const matchesCategory = category === 'all' || product.category === category
+      const matchesSearch = productMatchesSearch(product, search)
+      const matchesCategory =
+        search.trim().length > 0 || category === 'all' || product.category === category
       return matchesSearch && matchesCategory
     })
   }, [products, search, category])
@@ -173,7 +213,6 @@ export function App() {
       }
       return [...current, { ...product, quantity: 1 }]
     })
-    setToast(`${product.title} × ${inCart + 1}`)
   }
 
   function setCartQuantity(id: string, quantity: number): void {
@@ -226,7 +265,7 @@ export function App() {
   async function handlePlaceOrder(city: string, address: string): Promise<void> {
     const user = auth.currentUser
     if (!user || !customer) {
-      setOrderError('Add your contact in the cart first')
+      setOrderError('Add your contact at checkout first')
       throw new Error('Not signed in')
     }
 
@@ -238,6 +277,36 @@ export function App() {
       setOrderError(placeError instanceof Error ? placeError.message : 'Could not place order')
       throw placeError
     }
+  }
+
+  async function checkout(details: CheckoutDetails): Promise<void> {
+    if (customer && auth.currentUser) {
+      await handlePlaceOrder(details.city, details.address)
+    } else {
+      await handleCheckoutNew(details)
+    }
+    await signOutShop()
+  }
+
+  const shop: ShopContextValue = {
+    visible,
+    categories,
+    search,
+    category,
+    setSearch,
+    setCategory,
+    openProduct,
+    addToCart,
+    setCartQuantity,
+    cartQty,
+    cart,
+    customer,
+    authError,
+    orderError,
+    authSaving,
+    closeCart: () => setCartOpen(false),
+    checkout,
+    signOutShop,
   }
 
   if (status === 'loading') {
@@ -254,84 +323,69 @@ export function App() {
   }
 
   return (
-    <div className="app">
-      <ScrollToTop />
-      <Navbar
-        customer={customer}
-        cartCount={cart.reduce((sum, item) => sum + item.quantity, 0)}
-        onOpenCart={() => setCartOpen(true)}
-      />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route
-          path="/shop"
-          element={
-            <ShopPage
-              products={visible}
-              categories={categories}
-              search={search}
-              category={category}
-              onSearchChange={setSearch}
-              onCategoryChange={setCategory}
-              onSelect={openProduct}
-              onAdd={addToCart}
-              onQuantity={setCartQuantity}
-              cartQty={cartQty}
-            />
-          }
+    <ShopContext.Provider value={shop}>
+      <div className="app">
+        <ScrollToTop />
+        <Navbar
+          search={search}
+          products={products}
+          cartCount={cart.reduce((sum, item) => sum + item.quantity, 0)}
+          onSearchChange={(value) => {
+            setSearch(value)
+            if (value.trim()) {
+              setCategory('all')
+            }
+          }}
+          onPickCollection={(next) => {
+            setSearch('')
+            setCategory(next)
+          }}
+          onPickProduct={(id) => {
+            void openProduct(id)
+          }}
+          cartLocked={cartLocked}
+          onOpenCart={() => {
+            if (!cartLocked) {
+              setCartOpen(true)
+            }
+          }}
         />
-        <Route path="/collections" element={<Navigate to="/shop" replace />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/faq" element={<FaqPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/account" element={<AccountPage customer={customer} onLogout={signOutShop} />} />
-      </Routes>
-      <Footer />
-      {selected ? (
-        <ProductDrawer
-          product={selected}
-          cartQty={cartQty?.[selected.id] ?? 0}
-          onClose={() => setSelected(null)}
-          onAddToCart={addToCart}
-          onQuantity={setCartQuantity}
-        />
-      ) : null}
-      {cartOpen ? (
-        <CartDrawer
-          items={cart}
-          customer={customer}
-          authError={authError}
-          authSaving={authSaving}
-          orderError={orderError}
-          onClose={() => setCartOpen(false)}
-          onQuantity={setCartQuantity}
-          onCheckoutNew={handleCheckoutNew}
-          onPlaceOrder={handlePlaceOrder}
-        />
-      ) : null}
-      {toast ? (
-        <div className="cart-toast" role="status">
-          <div>
-            <p className="eyebrow">{toast.includes('×') ? 'Added' : 'Cart'}</p>
-            <p>{toast}</p>
+        {children}
+        <Footer />
+        {selected ? (
+          <ProductDrawer
+            product={selected}
+            onClose={() => setSelected(null)}
+            onAddToCart={addToCart}
+          />
+        ) : null}
+        {cartOpen && !cartLocked ? (
+          <CartDrawer items={cart} onClose={() => setCartOpen(false)} onQuantity={setCartQuantity} />
+        ) : null}
+        {toast ? (
+          <div className="cart-toast" role="status">
+            <div>
+              <p className="eyebrow">{toast.includes('×') ? 'Added' : 'Cart'}</p>
+              <p>{toast}</p>
+            </div>
+            <div className="cart-toast-actions">
+              <button className="btn ghost" type="button" onClick={() => setToast(null)}>
+                Keep shopping
+              </button>
+              <button
+                className="btn primary"
+                type="button"
+                onClick={() => {
+                  setToast(null)
+                  setCartOpen(true)
+                }}
+              >
+                Done
+              </button>
+            </div>
           </div>
-          <div className="cart-toast-actions">
-            <button className="btn ghost" type="button" onClick={() => setToast(null)}>
-              Keep shopping
-            </button>
-            <button
-              className="btn primary"
-              type="button"
-              onClick={() => {
-                setToast(null)
-                setCartOpen(true)
-              }}
-            >
-              Done
-            </button>
-          </div>
-        </div>
-      ) : null}
-    </div>
+        ) : null}
+      </div>
+    </ShopContext.Provider>
   )
 }

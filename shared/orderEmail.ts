@@ -1,4 +1,4 @@
-import type { OrderItem } from './types.ts'
+import type { OrderItem } from './types'
 
 export interface OrderEmailInput {
   name: string

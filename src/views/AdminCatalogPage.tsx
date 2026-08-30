@@ -1,9 +1,18 @@
 import { useMemo, useState } from 'react'
-import { stockLabel, stockLevel, type Product, type StockLevel } from '../../shared/types.ts'
-import { formatPrice } from '../lib/money.ts'
+import { stockLabel, stockLevel, type Product, type StockLevel } from '../../shared/types'
+import { formatPrice } from '../lib/money'
+
+interface ShopReview {
+  id: string
+  name: string
+  email: string
+  text: string
+  createdAt: string
+}
 
 interface AdminCatalogPageProps {
   products: Product[]
+  reviews: ShopReview[]
   onAdd: () => void
   onEdit: (product: Product) => void
   onDelete: (product: Product) => void
@@ -12,7 +21,7 @@ interface AdminCatalogPageProps {
 
 type StockFilter = 'all' | StockLevel
 
-export function AdminCatalogPage({ products, onAdd, onEdit, onDelete, onStock }: AdminCatalogPageProps) {
+export function AdminCatalogPage({ products, reviews, onAdd, onEdit, onDelete, onStock }: AdminCatalogPageProps) {
   const [filter, setFilter] = useState<StockFilter>('all')
 
   const stats = useMemo(() => {
@@ -147,6 +156,25 @@ export function AdminCatalogPage({ products, onAdd, onEdit, onDelete, onStock }:
             </tbody>
           </table>
         </div>
+        <div>
+          <p className="eyebrow">Reviews</p>
+          <h2 className="has-rule">
+            From the <em>shop</em>
+          </h2>
+        </div>
+        {reviews.length === 0 ? (
+          <p className="lede">No reviews yet. They appear after a customer orders, then writes from the same email.</p>
+        ) : (
+          <div className="order-list">
+            {reviews.map((review) => (
+              <article className="order-card" key={review.id}>
+                <p className="eyebrow">{review.email}</p>
+                <h3>{review.name}</h3>
+                <p>{review.text}</p>
+              </article>
+            ))}
+          </div>
+        )}
       </section>
     </main>
   )

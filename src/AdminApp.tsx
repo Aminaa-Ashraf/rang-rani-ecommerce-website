@@ -1,18 +1,25 @@
+'use client'
+
 import { useEffect, useState } from 'react'
-import { Link, Navigate, Route, Routes } from 'react-router-dom'
-import { ProductCategory, type CreateProductInput, type Product } from '../shared/types.ts'
-import { ProductApi } from './api/client.ts'
-import { ProductForm } from './components/ProductForm.tsx'
-import { clearAdminKey, getAdminKey, setAdminKey } from './lib/adminSession.ts'
-import { AdminCatalogPage } from './pages/AdminCatalogPage.tsx'
-import { AdminLoginPage } from './pages/AdminLoginPage.tsx'
+import { usePathname } from 'next/navigation'
+import { ProductCategory, type CreateProductInput, type Product } from '../shared/types'
+import { ProductApi } from './api/client'
+import { ProductForm } from './components/ProductForm'
+import { clearAdminKey, getAdminKey, setAdminKey } from './lib/adminSession'
+import { Link, Navigate } from './lib/nav'
+import { AdminCatalogPage } from './views/AdminCatalogPage'
+import { AdminLoginPage } from './views/AdminLoginPage'
 
 const api = new ProductApi()
 
 export function AdminApp() {
+  const pathname = usePathname()
   const [authed, setAuthed] = useState(() => Boolean(getAdminKey()))
   const [loginError, setLoginError] = useState<string | null>(null)
   const [products, setProducts] = useState<Product[]>([])
+  const [reviews, setReviews] = useState<
+    { id: string; name: string; email: string; text: string; createdAt: string }[]
+  >([])
   const [formOpen, setFormOpen] = useState(false)
   const [editing, setEditing] = useState<Product | null>(null)
   const [saving, setSaving] = useState(false)
@@ -23,9 +30,10 @@ export function AdminApp() {
     }
 
     let cancelled = false
-    void api.getProducts().then((next) => {
+    void Promise.all([api.getProducts(), api.getReviews()]).then(([nextProducts, nextReviews]) => {
       if (!cancelled) {
-        setProducts(next)
+        setProducts(nextProducts)
+        setReviews(nextReviews)
       }
     })
     return () => {
@@ -48,6 +56,7 @@ export function AdminApp() {
     clearAdminKey()
     setAuthed(false)
     setProducts([])
+    setReviews([])
   }
 
   async function saveProduct(input: CreateProductInput): Promise<void> {
@@ -112,40 +121,30 @@ export function AdminApp() {
           </div>
         </div>
       </header>
-      <Routes>
-        <Route
-          path="login"
-          element={
-            authed ? (
-              <Navigate to="/admin" replace />
-            ) : (
-              <AdminLoginPage error={loginError} onLogin={handleLogin} />
-            )
-          }
+      {pathname === '/admin/login' ? (
+        authed ? (
+          <Navigate to="/admin" replace />
+        ) : (
+          <AdminLoginPage error={loginError} onLogin={handleLogin} />
+        )
+      ) : authed ? (
+        <AdminCatalogPage
+          products={products}
+          reviews={reviews}
+          onAdd={() => {
+            setEditing(null)
+            setFormOpen(true)
+          }}
+          onEdit={(product) => {
+            setEditing(product)
+            setFormOpen(true)
+          }}
+          onDelete={(product) => void removeProduct(product)}
+          onStock={(product, stock) => void changeStock(product, stock)}
         />
-        <Route
-          index
-          element={
-            authed ? (
-              <AdminCatalogPage
-                products={products}
-                onAdd={() => {
-                  setEditing(null)
-                  setFormOpen(true)
-                }}
-                onEdit={(product) => {
-                  setEditing(product)
-                  setFormOpen(true)
-                }}
-                onDelete={(product) => void removeProduct(product)}
-                onStock={(product, stock) => void changeStock(product, stock)}
-              />
-            ) : (
-              <Navigate to="/admin/login" replace />
-            )
-          }
-        />
-      </Routes>
+      ) : (
+        <Navigate to="/admin/login" replace />
+      )}
       {formOpen ? (
         <ProductForm
           categories={[

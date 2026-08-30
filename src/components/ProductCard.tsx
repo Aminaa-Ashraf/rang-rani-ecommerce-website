@@ -1,18 +1,15 @@
-import { stockLabel, stockLevel, type Product } from '../../shared/types.ts'
-import { formatPrice } from '../lib/money.ts'
+import { stockLabel, stockLevel, type Product } from '../../shared/types'
+import { formatPrice } from '../lib/money'
 
 interface ProductCardProps {
   product: Product
-  cartQty: number
   onSelect: (id: string) => void
   onAdd: (product: Product) => void
-  onQuantity: (id: string, quantity: number) => void
 }
 
-export function ProductCard({ product, cartQty, onSelect, onAdd, onQuantity }: ProductCardProps) {
+export function ProductCard({ product, onSelect, onAdd }: ProductCardProps) {
   const level = stockLevel(product.stock)
   const out = level === 'out'
-  const atMax = cartQty >= product.stock
 
   return (
     <article className={`card shop-card${out ? ' is-out' : ''}`}>
@@ -34,27 +31,6 @@ export function ProductCard({ product, cartQty, onSelect, onAdd, onQuantity }: P
         <p className="price">{formatPrice(product.price)}</p>
         {out ? (
           <p className="muted card-stock-note">Out of stock</p>
-        ) : cartQty > 0 ? (
-          <div className="card-qty">
-            <button
-              className="stepper-btn"
-              type="button"
-              onClick={() => onQuantity(product.id, cartQty - 1)}
-              aria-label={`Remove one ${product.title}`}
-            >
-              −
-            </button>
-            <span>{cartQty}</span>
-            <button
-              className="stepper-btn"
-              type="button"
-              onClick={() => onQuantity(product.id, cartQty + 1)}
-              disabled={atMax}
-              aria-label={`Add one ${product.title}`}
-            >
-              +
-            </button>
-          </div>
         ) : (
           <button className="btn primary card-add" type="button" onClick={() => onAdd(product)}>
             Add to cart

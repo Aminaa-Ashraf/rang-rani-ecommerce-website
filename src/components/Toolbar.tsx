@@ -13,10 +13,10 @@ export function Toolbar({ search, onSearchChange }: ToolbarProps) {
         </svg>
         <input
           type="search"
-          placeholder="Search jewelry"
+          placeholder="Search bangles or bracelets"
           value={search}
           onChange={(event) => onSearchChange(event.target.value)}
-          aria-label="Search jewelry"
+          aria-label="Search bangles or bracelets"
         />
       </label>
     </section>

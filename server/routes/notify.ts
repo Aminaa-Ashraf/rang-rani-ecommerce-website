@@ -1,7 +1,8 @@
 import { Router } from 'express'
 import { isEmail } from '../../shared/types.ts'
 import type { OrderEmailInput } from '../../shared/orderEmail.ts'
-import { sendOrderNotice } from '../orderMail.ts'
+import { sendOrderNotice, sendStudioNote } from '../orderMail.ts'
+import type { ReviewStore } from '../reviewStore.ts'
 
 function readNotice(body: unknown): OrderEmailInput | null {
   if (typeof body !== 'object' || body === null) {
@@ -64,7 +65,7 @@ function readNotice(body: unknown): OrderEmailInput | null {
   }
 }
 
-export function createNotifyRouter(): Router {
+export function createNotifyRouter(reviews?: ReviewStore): Router {
   const router = Router()
 
   router.post('/notify-order', async (req, res, next) => {
@@ -76,6 +77,28 @@ export function createNotifyRouter(): Router {
       }
 
       const data = await sendOrderNotice(input)
+      if (reviews) {
+        await reviews.rememberOrder(input.name, input.email)
+      }
+      res.status(200).json({ data })
+    } catch (error) {
+      next(error)
+    }
+  })
+
+  router.post('/contact', async (req, res, next) => {
+    try {
+      const body = req.body as Record<string, unknown>
+      const name = typeof body.name === 'string' ? body.name.trim() : ''
+      const email = typeof body.email === 'string' ? body.email.trim().toLowerCase() : ''
+      const message = typeof body.message === 'string' ? body.message.trim() : ''
+
+      if (!name || !isEmail(email) || message.length < 4) {
+        res.status(400).json({ error: 'Add your name, email, and a short note' })
+        return
+      }
+
+      const data = await sendStudioNote({ name, email, message })
       res.status(200).json({ data })
     } catch (error) {
       next(error)

@@ -1,8 +1,12 @@
-import type { Customer, CustomerAuth } from '../../shared/types.ts'
+import type { Customer, CustomerAuth } from '../../shared/types'
 
 const STORAGE_KEY = 'rangrani-customer'
 
 export function getCustomerAuth(): CustomerAuth | null {
+  if (typeof window === 'undefined') {
+    return null
+  }
+
   const raw = window.localStorage.getItem(STORAGE_KEY)
   if (!raw) {
     return null
@@ -20,10 +24,18 @@ export function getCustomerToken(): string | null {
 }
 
 export function setCustomerAuth(auth: CustomerAuth): void {
+  if (typeof window === 'undefined') {
+    return
+  }
+
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(auth))
 }
 
 export function clearCustomerAuth(): void {
+  if (typeof window === 'undefined') {
+    return
+  }
+
   window.localStorage.removeItem(STORAGE_KEY)
 }
 

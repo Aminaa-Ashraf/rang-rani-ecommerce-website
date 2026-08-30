@@ -6,13 +6,16 @@ import type { OrderStore } from './orderStore.ts'
 import { createProductRouter } from './routes/products.ts'
 import { createShopAuthRouter } from './routes/shopAuth.ts'
 import { createNotifyRouter } from './routes/notify.ts'
+import { createReviewRouter } from './routes/reviews.ts'
 import { createStockRouter } from './routes/stock.ts'
 import type { ProductService } from './productService.ts'
+import type { ReviewStore } from './reviewStore.ts'
 
 export function createApp(
   service: ProductService,
   customers: CustomerStore,
   orders: OrderStore,
+  reviews: ReviewStore,
 ): express.Express {
   const app = express()
 
@@ -35,7 +38,8 @@ export function createApp(
 
   app.use('/api/products', createProductRouter(service))
   app.use('/api/stock', createStockRouter(service))
-  app.use('/api', createNotifyRouter())
+  app.use('/api', createNotifyRouter(reviews))
+  app.use('/api', createReviewRouter(reviews))
   app.use('/api', createShopAuthRouter(customers, orders, service))
 
   app.use((_req, res) => {
