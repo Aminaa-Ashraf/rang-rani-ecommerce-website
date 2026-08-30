@@ -48,7 +48,9 @@ export function Navbar({
   const pathname = usePathname() ?? ''
   const params = useSearchParams()
   const boxRef = useRef<HTMLFormElement>(null)
+  const headerRef = useRef<HTMLElement>(null)
   const [open, setOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
   const [active, setActive] = useState(0)
 
   const hits = useMemo<SearchHit[]>(() => {
@@ -82,9 +84,17 @@ export function Navbar({
   }, [search])
 
   useEffect(() => {
+    setMenuOpen(false)
+  }, [pathname])
+
+  useEffect(() => {
     function onPointer(event: MouseEvent): void {
-      if (!boxRef.current?.contains(event.target as Node)) {
+      const target = event.target as Node
+      if (!boxRef.current?.contains(target)) {
         setOpen(false)
+      }
+      if (!headerRef.current?.contains(target)) {
+        setMenuOpen(false)
       }
     }
 
@@ -122,21 +132,36 @@ export function Navbar({
   }
 
   return (
-    <header className="site-header">
+    <header className="site-header" ref={headerRef}>
       <div className="header-inner">
         <NavLink className="brand" to="/">
           <img className="brand-logo" src="/logo.svg?v=lahore" alt="" />
           <span className="brand-name">Rang Rani</span>
         </NavLink>
-        <nav className="nav-links" aria-label="Primary">
+        <button
+          className="nav-toggle"
+          type="button"
+          aria-expanded={menuOpen}
+          aria-controls="site-nav"
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          onClick={() => setMenuOpen((value) => !value)}
+        >
+          <svg className="icon" viewBox="0 0 24 24" aria-hidden="true">
+            {menuOpen ? (
+              <path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" strokeWidth="1.7" />
+            ) : (
+              <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" strokeWidth="1.7" />
+            )}
+          </svg>
+        </button>
+        <nav className={`nav-links${menuOpen ? ' is-open' : ''}`} id="site-nav" aria-label="Primary">
           {links.map((link) => (
-            <NavLink key={link.to} to={link.to} end={link.end}>
+            <NavLink key={link.to} to={link.to} end={link.end} onClick={() => setMenuOpen(false)}>
               {link.label}
             </NavLink>
           ))}
         </nav>
-        <div className="header-actions">
-          <form
+        <form
             ref={boxRef}
             className="nav-search"
             role="search"
@@ -220,7 +245,6 @@ export function Navbar({
             </svg>
             <span className="cart-badge">{cartCount}</span>
           </button>
-        </div>
       </div>
     </header>
   )

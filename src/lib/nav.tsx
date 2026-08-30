@@ -33,13 +33,13 @@ function linkIsActive(pathname: string, to: string, end?: boolean): boolean {
   return pathname === to || pathname.startsWith(`${to}/`)
 }
 
-export function NavLink({ to, end, className, children }: NavLinkProps) {
+export function NavLink({ to, end, className, children, onClick }: NavLinkProps) {
   const pathname = usePathname() ?? ''
   const active = linkIsActive(pathname, to, end)
   const classes = [className, active ? 'active' : ''].filter(Boolean).join(' ')
 
   return (
-    <NextLink href={to} className={classes || undefined}>
+    <NextLink href={to} className={classes || undefined} onClick={onClick}>
       {children}
     </NextLink>
   )
