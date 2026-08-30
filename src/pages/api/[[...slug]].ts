@@ -9,6 +9,10 @@ export const config = {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-  const app = await getApi()
-  app(req, res)
+  try {
+    const app = await getApi()
+    app(req, res)
+  } catch {
+    res.status(503).json({ error: 'Catalog is waking up. Allow Atlas access from anywhere, then refresh.' })
+  }
 }

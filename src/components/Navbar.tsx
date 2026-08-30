@@ -45,7 +45,7 @@ export function Navbar({
   onOpenCart,
 }: NavbarProps) {
   const router = useRouter()
-  const pathname = usePathname()
+  const pathname = usePathname() ?? ''
   const params = useSearchParams()
   const boxRef = useRef<HTMLFormElement>(null)
   const [open, setOpen] = useState(false)

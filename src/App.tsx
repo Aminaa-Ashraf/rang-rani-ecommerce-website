@@ -59,7 +59,7 @@ interface ShopShellProps {
 }
 
 export function ShopShell({ children }: ShopShellProps) {
-  const pathname = usePathname()
+  const pathname = usePathname() ?? ''
   const cartLocked = pathname === '/checkout' || pathname === '/thanks'
   const [status, setStatus] = useState<ApiStatus>('loading')
   const [error, setError] = useState<string | null>(null)
@@ -317,7 +317,7 @@ export function ShopShell({ children }: ShopShellProps) {
     return (
       <main className="page-status">
         <p className="error">{error}</p>
-        <p>Run `npm run dev` so the API and shop start together.</p>
+        <p>The catalog could not load. If this is the live shop, allow Atlas Network Access from 0.0.0.0/0, then refresh.</p>
       </main>
     )
   }

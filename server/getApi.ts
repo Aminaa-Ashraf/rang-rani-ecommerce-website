@@ -20,7 +20,10 @@ export function getApi(): Promise<Express> {
       const customers = new CustomerStore()
       await customers.ensureIndexes()
       return createApp(new ProductService(store), customers, new OrderStore(), new ReviewStore())
-    })()
+    })().catch((error: unknown) => {
+      ready = null
+      throw error
+    })
   }
 
   return ready

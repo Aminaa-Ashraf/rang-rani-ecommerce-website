@@ -13,7 +13,7 @@ import { AdminLoginPage } from './views/AdminLoginPage'
 const api = new ProductApi()
 
 export function AdminApp() {
-  const pathname = usePathname()
+  const pathname = usePathname() ?? ''
   const [authed, setAuthed] = useState(() => Boolean(getAdminKey()))
   const [loginError, setLoginError] = useState<string | null>(null)
   const [products, setProducts] = useState<Product[]>([])

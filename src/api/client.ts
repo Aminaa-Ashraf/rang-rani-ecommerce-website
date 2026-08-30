@@ -28,7 +28,13 @@ async function fetchData<T>(url: string, options?: RequestInit): Promise<T> {
     ...options,
   })
 
-  const body: unknown = await response.json()
+  const raw = await response.text()
+  let body: unknown
+  try {
+    body = raw ? JSON.parse(raw) : null
+  } catch {
+    throw new Error('The shop API did not respond. Check Atlas Network Access, then refresh.')
+  }
 
   if (!response.ok || isApiFail(body)) {
     const message = isApiFail(body) ? body.error : `Request failed (${response.status})`
