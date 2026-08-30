@@ -32,3 +32,8 @@ CLAUDE.md
 *.njsproj
 *.sln
 *.sw?
+
+.vercel
+.env
+.env.*
+!.env.example

@@ -34,7 +34,7 @@ function linkIsActive(pathname: string, to: string, end?: boolean): boolean {
 }
 
 export function NavLink({ to, end, className, children }: NavLinkProps) {
-  const pathname = usePathname()
+  const pathname = usePathname() ?? ''
   const active = linkIsActive(pathname, to, end)
   const classes = [className, active ? 'active' : ''].filter(Boolean).join(' ')
 

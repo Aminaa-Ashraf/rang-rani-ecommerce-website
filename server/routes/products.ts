@@ -3,12 +3,13 @@ import { isCreateProductInput, isProductId, isStockCount } from '../../shared/ty
 import { requireAdmin } from '../adminAuth.ts'
 import { ProductNotFoundError, type ProductService } from '../productService.ts'
 
-function readProductId(value: string | undefined): ProductIdError | { id: string } {
-  if (!isProductId(value)) {
+function readProductId(value: unknown): ProductIdError | { id: string } {
+  const id = Array.isArray(value) ? value[0] : value
+  if (!isProductId(id)) {
     return { error: 'Product id must be a 24-character MongoDB id' }
   }
 
-  return { id: value }
+  return { id }
 }
 
 interface ProductIdError {

@@ -31,7 +31,7 @@ export function ShopPage({
     if (search.trim()) {
       return
     }
-    const next = params.get('category')
+    const next = params?.get('category')
     onCategoryChange(isProductCategory(next) ? next : 'all')
   }, [params, onCategoryChange, search])
 

@@ -93,7 +93,7 @@ export function Navbar({
   }, [])
 
   function goShop(): void {
-    if (pathname !== '/shop' || params.get('category')) {
+    if (pathname !== '/shop' || params?.get('category')) {
       router.push('/shop')
     }
     setOpen(false)
@@ -162,7 +162,7 @@ export function Navbar({
               onChange={(event) => {
                 onSearchChange(event.target.value)
                 setOpen(true)
-                if (pathname !== '/shop' || params.get('category')) {
+                if (pathname !== '/shop' || params?.get('category')) {
                   router.push('/shop')
                 }
               }}
