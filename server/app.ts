@@ -1,6 +1,6 @@
 import cors from 'cors'
 import express from 'express'
-import { getAdminKey } from './adminAuth.ts'
+import { getAdminKey, signAdminToken } from './adminAuth.ts'
 import type { CustomerStore } from './customerStore.ts'
 import type { OrderStore } from './orderStore.ts'
 import { createProductRouter } from './routes/products.ts'
@@ -33,7 +33,7 @@ export function createApp(
       return
     }
 
-    res.status(200).json({ data: { ok: true } })
+    res.status(200).json({ data: { token: signAdminToken() } })
   })
 
   app.use('/api/products', createProductRouter(service))

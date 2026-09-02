@@ -12,16 +12,16 @@ import type {
   RegisterInput,
   ShopOrder,
 } from '../../shared/types'
-import { getAdminKey } from '../lib/adminSession'
+import { getAdminToken } from '../lib/adminSession'
 import { getCustomerToken } from '../lib/customerSession'
 
 async function fetchData<T>(url: string, options?: RequestInit): Promise<T> {
-  const adminKey = getAdminKey()
+  const adminToken = getAdminToken()
   const customerToken = getCustomerToken()
   const response = await fetch(url, {
     headers: {
       'Content-Type': 'application/json',
-      ...(adminKey ? { 'x-admin-key': adminKey } : {}),
+      ...(adminToken ? { Authorization: `Bearer ${adminToken}` } : {}),
       ...(customerToken ? { 'x-customer-token': customerToken } : {}),
       ...options?.headers,
     },
@@ -68,11 +68,12 @@ export class ProductApi {
     return result.data
   }
 
-  public async login(password: string): Promise<void> {
-    await fetchData<ApiSuccess<{ ok: boolean }>>(`${this.baseUrl}/admin/login`, {
+  public async login(password: string): Promise<string> {
+    const result = await fetchData<ApiSuccess<{ token: string }>>(`${this.baseUrl}/admin/login`, {
       method: 'POST',
       body: JSON.stringify({ password }),
     })
+    return result.data.token
   }
 
   public async createProduct(input: CreateProductInput): Promise<Product> {

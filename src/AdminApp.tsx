@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import { ProductCategory, type CreateProductInput, type Product } from '../shared/types'
 import { ProductApi } from './api/client'
 import { ProductForm } from './components/ProductForm'
-import { clearAdminKey, getAdminKey, setAdminKey } from './lib/adminSession'
+import { clearAdminToken, getAdminToken, setAdminToken } from './lib/adminSession'
 import { Link, Navigate } from './lib/nav'
 import { AdminCatalogPage } from './views/AdminCatalogPage'
 import { AdminLoginPage } from './views/AdminLoginPage'
@@ -14,7 +14,7 @@ const api = new ProductApi()
 
 export function AdminApp() {
   const pathname = usePathname() ?? ''
-  const [authed, setAuthed] = useState(() => Boolean(getAdminKey()))
+  const [authed, setAuthed] = useState(() => Boolean(getAdminToken()))
   const [loginError, setLoginError] = useState<string | null>(null)
   const [products, setProducts] = useState<Product[]>([])
   const [reviews, setReviews] = useState<
@@ -44,8 +44,8 @@ export function AdminApp() {
   async function handleLogin(password: string): Promise<void> {
     setLoginError(null)
     try {
-      await api.login(password)
-      setAdminKey(password)
+      const token = await api.login(password)
+      setAdminToken(token)
       setAuthed(true)
     } catch (error) {
       setLoginError(error instanceof Error ? error.message : 'Could not sign in')
@@ -53,7 +53,7 @@ export function AdminApp() {
   }
 
   function signOut(): void {
-    clearAdminKey()
+    clearAdminToken()
     setAuthed(false)
     setProducts([])
     setReviews([])

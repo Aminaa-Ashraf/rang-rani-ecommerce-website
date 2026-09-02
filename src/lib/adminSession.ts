@@ -1,6 +1,6 @@
-const STORAGE_KEY = 'rangrani-admin-key'
+const STORAGE_KEY = 'rangrani-admin-token'
 
-export function getAdminKey(): string | null {
+export function getAdminToken(): string | null {
   if (typeof window === 'undefined') {
     return null
   }
@@ -8,10 +8,10 @@ export function getAdminKey(): string | null {
   return window.sessionStorage.getItem(STORAGE_KEY)
 }
 
-export function setAdminKey(key: string): void {
-  window.sessionStorage.setItem(STORAGE_KEY, key)
+export function setAdminToken(token: string): void {
+  window.sessionStorage.setItem(STORAGE_KEY, token)
 }
 
-export function clearAdminKey(): void {
+export function clearAdminToken(): void {
   window.sessionStorage.removeItem(STORAGE_KEY)
 }

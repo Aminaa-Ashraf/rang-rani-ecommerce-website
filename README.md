@@ -33,7 +33,7 @@ Four collections · PKR · Next.js + Express + MongoDB + Firebase
 | Catalog | MongoDB Atlas |
 | Auth / orders | Firebase Auth + Cloud Firestore |
 | UI | Custom CSS (ivory, gold, maroon) |
-| Admin | Key-gated catalog at `/admin` |
+| Admin | JWT after studio password at `/admin` |
 
 ## Quick start
 
@@ -69,7 +69,8 @@ On Vercel, set the same env vars and allow Atlas access from `0.0.0.0/0` (Networ
 |----------|---------|
 | `MONGODB_URI` | Atlas or local Mongo connection |
 | `MONGODB_DB` | Database name |
-| `ADMIN_KEY` | Studio admin password |
+| `ADMIN_KEY` | Studio admin password (login only) |
+| `JWT_SECRET` | Signs admin JWTs (optional locally; set on Vercel) |
 | `SMTP_USER` / `SMTP_PASS` | Optional order email (Gmail App Password) |
 
 ## Scripts
