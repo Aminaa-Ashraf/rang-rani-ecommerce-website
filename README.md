@@ -47,8 +47,6 @@ npm run dev
 Shop: [http://localhost:5173](http://localhost:5173)  
 Admin: [http://localhost:5173/admin](http://localhost:5173/admin)
 
-On Vercel, set the same env vars and allow Atlas access from `0.0.0.0/0` (Network Access). The Next.js app serves `/api` on the same host.
-
 ## Routes
 
 | Path | Purpose |
@@ -70,7 +68,7 @@ On Vercel, set the same env vars and allow Atlas access from `0.0.0.0/0` (Networ
 | `MONGODB_URI` | Atlas or local Mongo connection |
 | `MONGODB_DB` | Database name |
 | `ADMIN_KEY` | Studio admin password (login only) |
-| `JWT_SECRET` | Signs admin JWTs (optional locally; set on Vercel) |
+| `JWT_SECRET` | Signs admin JWTs (optional locally) |
 | `SMTP_USER` / `SMTP_PASS` | Optional order email (Gmail App Password) |
 
 ## Scripts

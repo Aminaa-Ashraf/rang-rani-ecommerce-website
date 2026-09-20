@@ -5,11 +5,11 @@ import '../styles/app.css'
 export const metadata: Metadata = {
   title: 'Rang Rani — Jewelry',
   description: 'Bangles and bracelets from Lahore. Beaded, kundan, charm, and bridal styles.',
-  metadataBase: new URL('https://rang-rani.vercel.app'),
+  metadataBase: new URL('http://localhost:5173'),
   openGraph: {
     title: 'Rang Rani — Bangles & bracelets from Lahore',
     description: 'Moti for Tuesday, kundan for shine, a bridal stack for the shaadi week.',
-    url: 'https://rang-rani.vercel.app',
+    url: 'http://localhost:5173',
     siteName: 'Rang Rani',
     type: 'website',
     images: [
